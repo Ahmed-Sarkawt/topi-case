@@ -2,7 +2,7 @@ name: Deploy — Standalone Presentation
 
 on:
   push:
-    branches: [full-dashboard]
+    branches: [presentation]
   workflow_dispatch:
 
 permissions:
