@@ -34,18 +34,11 @@ export function TooltipProvider({ children }) {
             animation: 'tipFade 0.12s ease',
           }}
         >
-          <div style={{
-            display: 'flex', alignItems: 'center', gap: 7, marginBottom: tip.title ? 7 : 0,
-          }}>
-            <span style={{
-              fontSize: 9, fontWeight: 800, padding: '2px 6px', borderRadius: 4,
-              background: '#1d4ed8', color: '#93c5fd', letterSpacing: 0.5,
-              flexShrink: 0,
-            }}>ELI5</span>
-            {tip.title && (
+          {tip.title && (
+            <div style={{ marginBottom: 7 }}>
               <span style={{ fontSize: 12, fontWeight: 700, color: '#60a5fa' }}>{tip.title}</span>
-            )}
-          </div>
+            </div>
+          )}
           <p style={{
             fontSize: 12, color: '#cbd5e1', lineHeight: 1.65, margin: 0,
           }}>{tip.explain}</p>
