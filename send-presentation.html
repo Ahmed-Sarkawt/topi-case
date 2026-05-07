@@ -12,256 +12,242 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --blue:       #0073CF;
-      --blue-text:  #005AAB;
-      --blue-light: #7EC8FF;  /* high-contrast blue for dark backgrounds */
-      --dark:       #003865;
-      --ink:        #1A2535;
-      --muted:      #4F5D6B;  /* darker — 5.1:1 on white */
-      --border:     #d0d5dc;
-      --surface:    #f0f3f7;
-      --bg:         #f7f9fc;
-      --white:      #ffffff;
-      --red:        #ff1f39;
-      --red-dark:   #C00020;  /* accessible red for small tags on light bg */
+      --blue:     #0073CF;
+      --blue-t:   #0058A6;
+      --blue-l:   #7EC8FF;
+      --dark:     #09131F;
+      --ink:      #0E1B28;
+      --muted:    #596473;
+      --border:   #CDD1D8;
+      --paper:    #F4F3EC;
+      --surface:  #ECEAE0;
+      --white:    #ffffff;
+      --red:      #CC2A38;
       --font: 'Inter', system-ui, -apple-system, sans-serif;
     }
 
-    html, body {
-      width: 100%; height: 100%; overflow: hidden;
-      font-family: var(--font);
-      background: var(--dark);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
+    html, body { width:100%; height:100%; overflow:hidden; font-family:var(--font); background:var(--dark); -webkit-font-smoothing:antialiased; }
 
-    /* ── Deck container ── */
-    .deck { position: fixed; inset: 0 0 54px 0; }
+    .deck { position:fixed; inset:0 0 54px 0; }
 
-    /* ── Slide base ── */
     .slide {
-      position: absolute; inset: 0; display: flex; flex-direction: column;
-      padding: 64px 80px 48px; opacity: 0; transform: translateY(20px);
-      transition: opacity 0.42s cubic-bezier(0.2, 0.8, 0.2, 1),
-                  transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1);
-      pointer-events: none; overflow: hidden;
+      position:absolute; inset:0; display:flex; flex-direction:column;
+      opacity:0; transform:translateY(18px);
+      transition:opacity 0.4s cubic-bezier(0.2,0.8,0.2,1), transform 0.4s cubic-bezier(0.2,0.8,0.2,1);
+      pointer-events:none; overflow:hidden;
     }
-    .slide.active  { opacity: 1; transform: translateY(0); pointer-events: auto; }
-    .slide.past    { opacity: 0; transform: translateY(-16px); }
+    .slide.active { opacity:1; transform:translateY(0); pointer-events:auto; }
+    .slide.past   { opacity:0; transform:translateY(-14px); }
 
-    /* ── Slide themes ── */
-    .light      { background: var(--bg);      color: var(--ink); }
-    .white      { background: var(--white);   color: var(--ink); }
-    .cover      { background: var(--dark);    color: var(--white); }
-    .dark       { background: var(--dark);    color: var(--white); }
-    .tr-green   { background: var(--blue);   color: var(--white); }
-    .tr-dark    { background: var(--dark);    color: var(--white); }
-    .surface-bg { background: var(--surface); color: var(--ink); }
+    /* ── Themes ── */
+    .s-dark   { background:var(--dark);  color:var(--white); padding:52px 72px 40px; }
+    .s-paper  { background:var(--paper); color:var(--ink);   padding:52px 72px 40px; }
+    .s-white  { background:var(--white); color:var(--ink);   padding:52px 72px 40px; }
+    .s-opener { background:var(--dark);  color:var(--white); padding:0; overflow:hidden; }
+    .s-blue   { background:#003D7A;      color:var(--white); padding:0; overflow:hidden; }
 
-    /* ── Typography ── */
-    .eyebrow {
-      font-size: 10px; font-weight: 600;
-      letter-spacing: 0.13em; text-transform: uppercase;
-      color: var(--blue-text); margin-bottom: 16px;
+    /* ── Kicker ── */
+    .kicker {
+      display:block; font-size:9px; font-weight:700;
+      letter-spacing:0.2em; text-transform:uppercase;
+      color:var(--blue-t); margin-bottom:12px;
     }
-    .cover .eyebrow, .dark .eyebrow, .tr-dark .eyebrow { color: var(--blue-light); }
-    .tr-green .eyebrow { color: rgba(255,255,255,0.65); }
+    .s-dark  .kicker, .s-opener .kicker { color:var(--blue-l); }
+    .s-blue  .kicker { color:rgba(255,255,255,0.55); }
 
-    h1 { font-size: clamp(2.2rem, 4.5vw, 3.6rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.025em; }
-    h2 { font-size: clamp(1.5rem, 2.8vw, 2.1rem); font-weight: 700; line-height: 1.2; letter-spacing: -0.022em; margin-bottom: 28px; }
-    .cover h2, .dark h2, .tr-dark h2 { color: var(--white); }
-    h3 { font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
-    p  { font-size: 0.95rem; line-height: 1.65; }
-    .lg { font-size: 1.1rem; }
-    .sm { font-size: 0.82rem; }
+    /* ── Display heading ── */
+    .display {
+      font-size:clamp(1.7rem, 3vw, 2.4rem);
+      font-weight:800; letter-spacing:-0.028em; line-height:1.08;
+    }
+    .s-dark .display, .s-opener .display { color:white; }
 
-    .muted { color: var(--muted); }
-    .dark .muted, .cover .muted, .tr-dark .muted { color: rgba(255,255,255,0.70); }
-    .green-t { color: var(--blue-text); font-weight: 600; }
-    .dark .green-t, .cover .green-t, .tr-dark .green-t { color: var(--blue-light); }
+    /* ── Body text ── */
+    .body  { font-size:0.88rem; line-height:1.72; }
+    .small { font-size:0.78rem; line-height:1.65; }
+    .xs    { font-size:0.70rem; line-height:1.60; }
+    .muted { color:var(--muted); }
+    .s-dark  .muted { color:rgba(255,255,255,0.50); }
+    .accent  { color:var(--blue-t); font-weight:600; }
+    .s-dark  .accent { color:var(--blue-l); }
 
-    /* ── Stat slide ── */
-    .stat-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-    .stat-big  { font-size: clamp(6rem, 18vw, 12rem); font-weight: 800; line-height: 1; letter-spacing: -0.04em; color: var(--ink); }
-    .dark .stat-big, .cover .stat-big { color: var(--white); }
-    .stat-sub  { font-size: 1.1rem; color: var(--muted); margin-top: 12px; }
-    .dark .stat-sub { color: rgba(255,255,255,0.70); }
-    .stat-vs   { font-size: 1.4rem; font-weight: 700; color: var(--blue-text); margin: 8px 0; }
-    .dark .stat-vs { color: var(--blue-light); }
+    /* ── Section opener ── */
+    .opener-body {
+      position:relative; height:100%; display:flex; flex-direction:column;
+      justify-content:flex-end; padding:60px 80px; overflow:hidden;
+    }
+    .opener-ghost {
+      position:absolute; right:-0.05em; bottom:-0.08em; z-index:0;
+      font-size:clamp(16rem,38vw,30rem); font-weight:800;
+      letter-spacing:-0.06em; line-height:0.82;
+      color:rgba(255,255,255,0.038); pointer-events:none; user-select:none;
+    }
+    .s-blue .opener-ghost { color:rgba(255,255,255,0.06); }
+    .opener-inner { position:relative; z-index:1; }
+    .opener-title {
+      font-size:clamp(2.8rem, 7vw, 5.8rem); font-weight:800;
+      letter-spacing:-0.036em; line-height:1.0;
+      margin-top:10px; margin-bottom:12px;
+    }
+    .opener-sub { font-size:0.92rem; color:rgba(255,255,255,0.48); }
 
-    /* ── Transition slide ── */
-    .tr-center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-    .tr-title  { font-size: clamp(3rem, 7.5vw, 5.5rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
-    .tr-green .tr-title { color: var(--white); }
-    .tr-dark  .tr-title { color: var(--white); }
-    .tr-tag { display: block; margin-top: 22px; background: none; padding: 0; border-radius: 0; font-size: 1rem; font-weight: 400; letter-spacing: 0; }
-    .tr-dark .tr-tag { color: rgba(255,255,255,0.50); }
-    .tr-green .tr-tag { color: rgba(255,255,255,0.60); }
+    /* ── Pull quote ── */
+    .pull {
+      border-left:2px solid var(--blue);
+      padding:2px 0 2px 16px;
+      font-size:0.9rem; line-height:1.7;
+      color:var(--ink);
+    }
+    .s-dark .pull { color:rgba(255,255,255,0.80); border-left-color:var(--blue-l); }
+
+    /* ── Rule ── */
+    .rule { display:block; width:100%; height:1px; background:var(--border); flex-shrink:0; }
+    .s-dark .rule { background:rgba(255,255,255,0.09); }
+
+    /* ── Editorial list items ── */
+    .e-row { display:flex; gap:20px; padding:18px 0; border-top:1px solid var(--border); align-items:flex-start; }
+    .s-dark .e-row { border-top-color:rgba(255,255,255,0.08); }
+    .e-row:first-child { border-top:none; padding-top:0; }
+    .e-n { font-size:2.4rem; font-weight:800; letter-spacing:-0.04em; line-height:1; flex-shrink:0; width:46px; color:rgba(0,115,207,0.13); }
+    .s-dark .e-n { color:rgba(126,200,255,0.13); }
+    .e-t { font-size:0.93rem; font-weight:700; margin-bottom:4px; }
+    .e-d { font-size:0.82rem; color:var(--muted); line-height:1.65; }
+    .s-dark .e-d { color:rgba(255,255,255,0.48); }
+
+    /* ── Stat comparison (side-by-side) ── */
+    .stat-cmp { display:grid; grid-template-columns:1fr 1px 1fr; align-items:center; margin-bottom:20px; }
+    .stat-cmp-divider { width:1px; height:72px; background:var(--border); }
+    .stat-cmp-l { padding-right:24px; }
+    .stat-cmp-r { padding-left:24px; }
+    .stat-lbl  { font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.16em; margin-bottom:8px; }
+    .stat-num  { font-size:clamp(2.8rem,6vw,4.8rem); font-weight:800; letter-spacing:-0.045em; line-height:0.88; }
+    .stat-cap  { font-size:0.76rem; color:var(--muted); margin-top:6px; }
+
+    /* ── Tag ── */
+    .tag { display:inline-block; padding:2px 8px; border-radius:3px; font-size:0.68rem; font-weight:700; letter-spacing:0.03em; }
+    .t-blue   { background:rgba(0,115,207,0.10); color:var(--blue-t); }
+    .t-red    { background:rgba(204,42,56,0.10); color:var(--red); }
+    .t-gray   { background:var(--surface); color:var(--muted); }
+    .t-green  { background:rgba(0,115,207,0.10); color:var(--blue-t); }
+    .t-yellow { background:#fff6e0; color:#7a5a00; border:1px solid rgba(200,150,0,0.18); }
+    .t-neutral{ background:var(--surface); color:var(--muted); }
+
+    /* ── Step ── */
+    .step { display:flex; gap:14px; align-items:flex-start; }
+    .step + .step { margin-top:16px; }
+    .step-num { width:22px; height:22px; border-radius:50%; background:transparent; border:1px solid var(--border); color:var(--muted); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:0.66rem; font-weight:700; }
+    .step-title { font-size:0.9rem; font-weight:700; margin-bottom:3px; }
+    .step-body  { font-size:0.80rem; color:var(--muted); line-height:1.65; }
+
+    /* ── Col grids ── */
+    .cols-2   { display:grid; grid-template-columns:1fr 1fr;     gap:44px; flex:1; }
+    .cols-3   { display:grid; grid-template-columns:1fr 1fr 1fr; gap:28px; flex:1; }
+    .cols-6040{ display:grid; grid-template-columns:60fr 40fr;   gap:48px; flex:1; }
+
+    /* ── Cover layout ── */
+    .cover-wrap { display:flex; height:100%; }
+    .cover-main { flex:1; display:flex; flex-direction:column; justify-content:center; padding:60px 60px 60px 80px; }
+    .cover-badge { display:block; font-size:9px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.30); margin-bottom:14px; }
+    .cover-title { font-size:clamp(2.4rem,5.5vw,4.4rem); font-weight:800; letter-spacing:-0.034em; line-height:1.04; color:white; margin-bottom:16px; margin-top:6px; }
+    .cover-sub   { font-size:0.96rem; color:rgba(255,255,255,0.56); line-height:1.72; max-width:440px; margin-bottom:36px; }
+    .cover-rule  { width:40px; height:1px; background:rgba(255,255,255,0.18); margin-bottom:28px; }
+    .cover-sidebar {
+      width:290px; flex-shrink:0;
+      background:#0066BA; display:flex; flex-direction:column;
+      justify-content:center; padding:60px 36px;
+      position:relative; overflow:hidden;
+    }
+    .cover-sidebar-ghost {
+      position:absolute; right:-0.1em; bottom:-0.06em; z-index:0;
+      font-size:13rem; font-weight:800; letter-spacing:-0.08em;
+      color:rgba(0,0,0,0.14); user-select:none; pointer-events:none;
+    }
+    .cover-sidebar-inner { position:relative; z-index:1; }
+    .cover-sidebar-lbl   { font-size:8px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.45); margin-bottom:10px; display:block; }
+    .cover-sidebar-num   { font-size:4.2rem; font-weight:800; letter-spacing:-0.04em; line-height:0.88; color:white; margin-bottom:14px; }
+    .cover-sidebar-sep   { width:24px; height:1px; background:rgba(255,255,255,0.28); margin-bottom:14px; }
+    .cover-sidebar-num2  { font-size:4.2rem; font-weight:800; letter-spacing:-0.04em; line-height:0.88; color:rgba(255,255,255,0.32); margin-bottom:10px; }
+    .cover-sidebar-cap   { font-size:0.76rem; color:rgba(255,255,255,0.40); line-height:1.55; }
+
+    /* ── Hobby pills ── */
+    .hobby { position:relative; display:inline-flex; align-items:center; padding:4px 11px; border-radius:20px; background:rgba(255,255,255,0.09); border:1px solid rgba(255,255,255,0.18); font-size:0.72rem; color:rgba(255,255,255,0.80); cursor:pointer; transition:background 0.18s,border-color 0.18s; }
+    .hobby:hover { background:rgba(0,115,207,0.15); border-color:rgba(0,115,207,0.35); }
+    .hobby::after { content:attr(data-tip); position:absolute; bottom:calc(100% + 7px); left:50%; transform:translateX(-50%); background:var(--dark); color:var(--blue-l); font-size:0.62rem; font-weight:600; white-space:nowrap; padding:4px 10px; border-radius:5px; border:1px solid rgba(126,200,255,0.2); box-shadow:0 4px 12px rgba(0,0,0,0.4); opacity:0; pointer-events:none; transition:opacity 0.15s; z-index:10; }
+    .hobby:hover::after { opacity:1; }
+    .hobby i[data-lucide] { width:11px; height:11px; margin-right:4px; stroke-width:2.2; flex-shrink:0; }
 
     /* ── Tables ── */
-    table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-    th { text-align: left; padding: 9px 14px; font-weight: 600; font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; background: var(--surface); border-bottom: 2px solid var(--border); }
-    td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
-    tr:last-child td { border-bottom: none; }
-    .dark th { background: rgba(255,255,255,0.07); border-bottom-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.7); }
-    .dark td { border-bottom-color: rgba(255,255,255,0.08); color: rgba(255,255,255,0.8); }
-
-    /* ── Tags ── */
-    .tag      { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
-    .t-green  { background: rgba(0,115,207,0.15); color: var(--blue-text); }
-    .t-red    { background: rgba(255,31,57,0.1);   color: var(--red); }
-    .t-yellow { background: #fff8e6; color: var(--ink); border: 1px solid #ffb800; }
-    .t-blue   { background: rgba(0,115,207,0.12);  color: #005AAB; }
-    .t-neutral{ background: var(--surface); color: var(--muted); }
-
-    /* ── Comparison ── */
-    .compare { display: grid; grid-template-columns: 1fr 1px 1fr; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-    .compare-header { padding: 10px 18px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; }
-    .compare-b .compare-header { background: transparent; color: var(--red);        border-bottom: 1px solid rgba(255,31,57,0.15); }
-    .compare-a .compare-header { background: transparent; color: var(--blue-text); border-bottom: 1px solid rgba(0,115,207,0.18); }
-    .compare-b .compare-header::before { content: '✕  '; }
-    .compare-a .compare-header::before { content: '✓  '; }
-    .compare-body { padding: 8px 0; }
-    .compare-row  { padding: 9px 18px; font-size: 0.82rem; border-bottom: 1px solid var(--border); line-height: 1.5; }
-    .compare-row:last-child { border-bottom: none; }
-    .compare-divider { width: 1px; background: var(--border); }
-    .compare-big { padding: 20px 18px; }
-
-    /* ── Steps ── */
-    .steps { display: flex; flex-direction: column; gap: 20px; flex: 1; justify-content: center; }
-    .step  { display: flex; gap: 20px; align-items: flex-start; }
-    .step-num   { width: 26px; height: 26px; border-radius: 50%; background: transparent; border: 1.5px solid var(--border); color: var(--muted); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; }
-    .step-title { font-size: 0.92rem; font-weight: 600; margin-bottom: 4px; }
-    .step-body  { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
-
-    /* ── Two-col layout ── */
-    .cols-2     { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; flex: 1; }
-    .cols-3     { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; flex: 1; }
-    .cols-65-35 { display: grid; grid-template-columns: 65fr 35fr; gap: 32px; flex: 1; }
-
-    /* ── Card ── */
-    .card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
-    .dark .card { background: rgba(255,255,255,0.025); border-color: rgba(255,255,255,0.065); }
-    .card + .card { margin-top: 12px; }
-
-    /* ── Cover specifics ── */
-    .cover-badge  { display: inline-flex; align-items: center; gap: 8px; background: none; border: none; border-radius: 0; padding: 0; font-size: 0.7rem; font-weight: 600; color: rgba(255,255,255,0.35); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 32px; width: fit-content; }
-    .cover-title  { font-size: clamp(2.4rem, 5.5vw, 4.2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
-    .cover-sub    { font-size: 1rem; color: rgba(255,255,255,0.72); margin-top: 12px; }
-    .cover-meta   { margin-top: 48px; font-size: 0.82rem; color: rgba(255,255,255,0.3); }
-    .cover-cols   { display: grid; grid-template-columns: 1fr 400px; height: 100%; min-height: 0; }
-    .cover-right  { display: flex; flex-direction: column; background: rgba(255,255,255,0.03); border-left: 1px solid rgba(255,255,255,0.07); padding: 48px 40px; justify-content: center; gap: 20px; }
-
-    /* ── Closing slide ── */
-    .closing       { flex: 1; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; }
-    .closing-name  { font-size: 2.2rem; font-weight: 800; color: white; letter-spacing: -0.02em; }
-    .closing-role  { font-size: 0.92rem; color: rgba(255,255,255,0.65); margin-top: 6px; }
-    .closing-email { font-size: 0.92rem; color: var(--blue); margin-top: 4px; }
-
-    /* ── Hobby pills with tooltips ── */
-    .hobby { position: relative; display: inline-flex; align-items: center; padding: 4px 11px; border-radius: 20px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.22); font-size: 0.72rem; color: rgba(255,255,255,0.85); cursor: pointer; transition: background 0.18s, border-color 0.18s, color 0.18s; }
-    .hobby:hover { background: rgba(0,115,207,0.12); border-color: rgba(0,115,207,0.35); color: rgba(255,255,255,0.9); }
-    .hobby::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: var(--dark); color: var(--blue); font-size: 0.62rem; font-weight: 600; white-space: nowrap; padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(0,115,207,0.25); box-shadow: 0 4px 12px rgba(0,0,0,0.4); opacity: 0; pointer-events: none; transition: opacity 0.15s 0.05s; z-index: 10; }
-    .hobby:hover::after { opacity: 1; }
-    .hobby i[data-lucide] { width: 13px; height: 13px; margin-right: 5px; stroke-width: 2.2; flex-shrink: 0; }
-
-    /* ── TOC grid ── */
-    .toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 48px; }
-
-    /* ── Process cards ── */
-    .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    .process-card { background: transparent; border: none; border-top: 1px solid rgba(255,255,255,0.07); border-radius: 0; padding: 16px 0 12px; }
-    .process-card h3 { font-size: 0.82rem; color: rgba(255,255,255,0.88); font-weight: 600; margin-bottom: 5px; }
-    .process-card p  { font-size: 0.78rem; color: rgba(255,255,255,0.48); line-height: 1.6; }
-
-    /* ── Stat number row ── */
-    .stat-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-    .stat-block { text-align: center; padding: 20px 12px; border-radius: 12px; }
-
-    /* ── Divider ── */
-    hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
-    .dark hr, .cover hr, .tr-dark hr { border-top-color: rgba(255,255,255,0.1); }
-    .divider { width: 40px; height: 3px; background: var(--blue); border-radius: 2px; margin: 16px 0; }
-
-    /* ── CTA button ── */
-    .btn-green { display: inline-flex; align-items: center; gap: 6px; padding: 11px 24px; background: var(--blue); color: white; border: none; border-radius: 99px; font-weight: 700; font-size: 0.88rem; text-decoration: none; cursor: pointer; }
-    .btn-outline { display: inline-flex; align-items: center; gap: 6px; padding: 11px 24px; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.12); border-radius: 99px; font-weight: 600; font-size: 0.88rem; text-decoration: none; }
+    table { width:100%; border-collapse:collapse; font-size:0.82rem; }
+    th { text-align:left; padding:8px 14px; font-weight:700; font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; border-bottom:1.5px solid var(--border); color:var(--muted); background:transparent; }
+    td { padding:10px 14px; border-bottom:1px solid var(--border); vertical-align:top; line-height:1.5; }
+    tr:last-child td { border-bottom:none; }
+    .s-dark th { border-bottom-color:rgba(255,255,255,0.12); color:rgba(255,255,255,0.42); }
+    .s-dark td { border-bottom-color:rgba(255,255,255,0.07); color:rgba(255,255,255,0.78); }
 
     /* ── Nav bar ── */
-    .nav { position: fixed; bottom: 0; left: 0; right: 0; height: 54px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; gap: 12px; background: rgba(33,40,46,0.97); backdrop-filter: blur(16px); border-top: 1px solid rgba(255,255,255,0.07); z-index: 100; }
-    .nav-left   { display: flex; align-items: center; flex-shrink: 0; }
-    .nav-center { flex: 1; display: flex; align-items: center; justify-content: center; min-width: 0; }
-    .nav-right  { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-    .nav-title  { font-size: 0.72rem; font-weight: 500; color: rgba(255,255,255,0.3); white-space: nowrap; }
-    .nav-counter { font-size: 0.72rem; color: rgba(255,255,255,0.5); font-weight: 500; white-space: nowrap; }
-    .nav-section-label { display: none; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: rgba(255,255,255,0.45); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .nav-btns { display: flex; gap: 6px; }
-    .nav-btn  { width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.08); border: none; color: rgba(255,255,255,0.6); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s, color 0.15s; touch-action: manipulation; }
-    .nav-btn:hover:not(:disabled) { background: rgba(255,255,255,0.16); color: white; }
-    .nav-btn:active:not(:disabled) { background: rgba(0,115,207,0.2); color: var(--blue); }
-    .nav-btn:disabled { opacity: 0.22; cursor: not-allowed; }
-    .nav-dots { display: flex; gap: 5px; align-items: center; }
-    .nav-dot  { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.2); transition: background 0.2s, width 0.2s, border-radius 0.2s; cursor: pointer; }
-    .nav-dot.active { background: var(--blue); width: 15px; border-radius: 5px; }
-    .nav-dot-sep { width: 1px; height: 12px; background: rgba(255,255,255,0.1); margin: 0 2px; }
+    .nav { position:fixed; bottom:0; left:0; right:0; height:54px; display:flex; align-items:center; justify-content:space-between; padding:0 20px; gap:12px; background:rgba(9,19,31,0.97); backdrop-filter:blur(16px); border-top:1px solid rgba(255,255,255,0.07); z-index:100; }
+    .nav-left   { display:flex; align-items:center; flex-shrink:0; }
+    .nav-center { flex:1; display:flex; align-items:center; justify-content:center; min-width:0; }
+    .nav-right  { display:flex; align-items:center; gap:10px; flex-shrink:0; }
+    .nav-title  { font-size:0.72rem; font-weight:500; color:rgba(255,255,255,0.28); white-space:nowrap; }
+    .nav-counter{ font-size:0.72rem; color:rgba(255,255,255,0.48); font-weight:500; white-space:nowrap; }
+    .nav-section-label { display:none; font-size:0.65rem; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:rgba(255,255,255,0.42); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .nav-btns { display:flex; gap:6px; }
+    .nav-btn  { width:36px; height:36px; border-radius:8px; background:transparent; border:none; color:rgba(255,255,255,0.45); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:color 0.15s; touch-action:manipulation; }
+    .nav-btn:hover:not(:disabled) { color:white; }
+    .nav-btn:active:not(:disabled){ color:var(--blue); }
+    .nav-btn:disabled { opacity:0.22; cursor:not-allowed; }
+    .nav-dots { display:flex; gap:5px; align-items:center; }
+    .nav-dot  { width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,0.2); transition:background 0.2s,width 0.2s,border-radius 0.2s; cursor:pointer; }
+    .nav-dot.active { background:var(--blue); width:15px; border-radius:5px; }
+    .nav-dot-sep { width:1px; height:12px; background:rgba(255,255,255,0.1); margin:0 2px; }
+    .progress { position:fixed; bottom:54px; left:0; height:2px; background:var(--blue); transition:width 0.35s cubic-bezier(0.2,0.8,0.2,1); z-index:101; }
 
-    /* ── Progress bar ── */
-    .progress { position: fixed; bottom: 54px; left: 0; height: 2px; background: var(--blue); transition: width 0.35s cubic-bezier(0.2,0.8,0.2,1); z-index: 101; }
-
-    /* ══ Responsive ══════════════════════════════════════════ */
-
+    /* ── Responsive ── */
     @media (max-width: 1024px) {
-      .slide { padding: 48px 48px 36px; }
-      .process-grid { grid-template-columns: 1fr 1fr; }
-      .cols-3 { grid-template-columns: 1fr 1fr; }
-      .cover-cols { grid-template-columns: 1fr 320px; }
+      .s-dark, .s-paper, .s-white { padding:44px 52px 36px; }
+      .cover-sidebar { width:240px; }
+      .opener-body { padding:48px 60px; }
     }
-
     @media (max-width: 900px) {
-      .cover-cols { grid-template-columns: 1fr; }
-      .cover-right { display: none; }
+      .cover-sidebar { display:none; }
     }
-
     @media (max-width: 768px) {
-      .slide { padding: 28px 20px 20px; }
-      .slide.active { overflow-y: auto; -webkit-overflow-scrolling: touch; }
-      h1 { font-size: clamp(1.8rem, 6vw, 3rem); }
-      h2 { font-size: clamp(1.15rem, 3.5vw, 1.6rem); margin-bottom: 14px; }
-      .cols-2, .cols-65-35, .cols-3 { grid-template-columns: 1fr !important; gap: 14px; }
-      .process-grid { grid-template-columns: 1fr; }
-      .compare { grid-template-columns: 1fr !important; }
-      .compare-divider { display: none; }
-      .toc-grid { grid-template-columns: 1fr !important; gap: 0 !important; }
-      .stat-big { font-size: clamp(3rem, 16vw, 8rem); }
-      .step { gap: 12px; }
-      .step-num { width: 30px; height: 30px; font-size: 0.78rem; }
-      .step-body { font-size: 0.8rem; }
-      .cover-badge { font-size: 0.62rem; padding: 4px 10px; margin-bottom: 18px; }
-      .cover-title { font-size: clamp(1.8rem, 6vw, 3.2rem); }
-      .cover-sub   { font-size: 0.85rem; }
-      .cover-meta  { margin-top: 24px; font-size: 0.72rem; }
-      .closing-name { font-size: 1.5rem; }
-      .nav { padding: 0 12px; }
-      .nav-title { display: none; }
-      .nav-dots .nav-dot { width: 4px; height: 4px; }
-      .nav-dots .nav-dot.active { width: 10px; }
-      .stat-row { grid-template-columns: 1fr; }
+      .s-dark, .s-paper, .s-white { padding:28px 24px 20px; }
+      .slide.active { overflow-y:auto; -webkit-overflow-scrolling:touch; }
+      .cols-2, .cols-3, .cols-6040 { grid-template-columns:1fr !important; gap:20px; }
+      .opener-body { padding:36px 28px; }
+      .opener-title { font-size:clamp(2.4rem,9vw,4rem); }
+      .opener-ghost { font-size:clamp(10rem,28vw,18rem); }
+      .stat-cmp { grid-template-columns:1fr; }
+      .stat-cmp-divider { width:100%; height:1px; }
     }
-
     @media (max-width: 600px) {
-      .nav-dots { display: none; }
-      .nav-section-label { display: block; }
-      .nav-btn { width: 44px; height: 44px; border-radius: 50%; }
-      .nav { height: 58px; padding: 0 10px; gap: 8px; }
-      .deck { inset: 0 0 58px 0; }
-      .progress { bottom: 58px; height: 3px; }
+      .nav-dots { display:none; }
+      .nav-section-label { display:block; }
+      .nav-btn { width:44px; height:44px; border-radius:50%; }
+      .nav { height:58px; padding:0 10px; gap:8px; }
+      .deck { inset:0 0 58px 0; }
+      .progress { bottom:58px; height:3px; }
+    }
+    @media (max-width: 480px) {
+      .s-dark, .s-paper, .s-white { padding:20px 16px 16px; }
+      .cover-main { padding:28px 20px; }
     }
 
-    @media (max-width: 480px) {
-      .slide { padding: 20px 16px 16px; }
-      h2 { font-size: clamp(1rem, 4vw, 1.3rem); margin-bottom: 10px; }
-      .eyebrow { font-size: 9px; letter-spacing: 0.08em; margin-bottom: 8px; }
-      .stat-big { font-size: clamp(2.6rem, 20vw, 5rem); }
+    @media print {
+      @page { size: 1600px 900px; margin: 0; }
+      html, body { overflow:visible !important; height:auto !important; width:1600px !important; background:var(--dark); }
+      .nav { display:none !important; }
+      .deck { position:static !important; inset:auto !important; height:auto !important; }
+      .slide {
+        position:relative !important; inset:auto !important;
+        opacity:1 !important; transform:none !important;
+        pointer-events:auto !important;
+        width:1600px !important; height:900px !important;
+        page-break-after:always !important; break-after:page !important;
+        overflow:hidden !important; display:flex !important; flex-shrink:0 !important;
+      }
     }
   </style>
 </head>
@@ -269,884 +255,899 @@
 
 <div class="deck" id="deck">
 
-  <!-- ── SLIDE 1 · Cover ──────────────────────────────────── -->
-  <div class="slide cover active" style="padding:0; overflow:hidden;">
-    <div style="display:flex; height:100%;">
-      <!-- Full-width title content -->
-      <div style="display:flex; flex-direction:column; justify-content:center; padding:64px 56px 64px 80px; flex:1;">
-        <div class="cover-badge">Senior PM · Case Study · May 2026</div>
-        <div class="cover-title">topi —<br>Seller Penetration</div>
-        <div class="cover-sub" style="margin-top:16px; max-width:480px;">Three problems at three funnel stages. One prioritized bet. A concrete plan to 2× financed GMV without a single new customer.</div>
-        <hr style="margin:32px 0; border:none; border-top:1px solid rgba(255,255,255,0.12); width:48px;">
-        <div style="display:flex; align-items:center; gap:16px;">
-          <div style="width:44px; height:44px; border-radius:50%; background:var(--blue); display:flex; align-items:center; justify-content:center; font-size:1.1rem; font-weight:800; color:var(--dark); flex-shrink:0;">A</div>
-          <div>
-            <div style="font-size:0.95rem; font-weight:600; color:white; margin-bottom:2px;">Ahmed Sulaiman</div>
-            <div style="font-size:0.82rem; color:rgba(255,255,255,0.65);">Senior Product Manager · Berlin</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── SLIDE 2 · About Ahmed ──────────────────────────── -->
-  <div class="slide cover" style="padding:0; overflow:hidden;">
-    <div class="cover-cols">
-      <div style="display:flex; flex-direction:column; justify-content:center; padding:64px 56px 64px 80px; overflow:hidden;">
-        <div style="font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--blue); margin-bottom:16px;">Who I am</div>
-        <div style="font-size:clamp(1.8rem,3.2vw,2.8rem); font-weight:800; color:white; line-height:1.05; letter-spacing:-0.025em; margin-bottom:6px;">Ahmed Sulaiman</div>
-        <div style="font-size:0.95rem; font-weight:500; color:rgba(255,255,255,0.60); margin-bottom:28px; letter-spacing:0.03em;">Senior Product Manager</div>
-        <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:28px;">
-          <div style="display:flex; gap:12px; align-items:flex-start;">
-            <div style="width:26px; height:26px; border-radius:50%; background:rgba(0,115,207,0.12); border:1px solid rgba(0,115,207,0.25); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:0.75rem; margin-top:1px;">🔨</div>
-            <div style="font-size:0.86rem; color:rgba(255,255,255,0.72); line-height:1.65;">I work at the intersection of <strong style="color:white;">data</strong>, <strong style="color:white;">channel economics</strong>, and <strong style="color:white;">product strategy</strong> — turning complex multi-stakeholder environments into clear, executable roadmaps.</div>
-          </div>
-          <div style="display:flex; gap:12px; align-items:flex-start;">
-            <div style="width:26px; height:26px; border-radius:50%; background:rgba(0,115,207,0.12); border:1px solid rgba(0,115,207,0.25); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:0.75rem; margin-top:1px;">🎯</div>
-            <div style="font-size:0.86rem; color:rgba(255,255,255,0.72); line-height:1.65;">I want to join topi to solve real problems at the intersection of <strong style="color:var(--blue);">B2B hardware financing</strong> and <strong style="color:var(--blue);">channel economics</strong>. The activation gap is real. This case study is my take on how we close it.</div>
-          </div>
-        </div>
-        <div style="font-size:0.62rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.50); margin-bottom:10px;">Outside work</div>
-        <div style="display:flex; flex-wrap:wrap; gap:7px;">
-          <span class="hobby" data-tip="5:10 Pace Record"><i data-lucide="timer"></i>Running</span>
-          <span class="hobby" data-tip="V4–V5"><i data-lucide="mountain"></i>Bouldering</span>
-          <span class="hobby" data-tip="On 23 mountains"><i data-lucide="compass"></i>Hiking</span>
-          <span class="hobby" data-tip="6 Languages"><i data-lucide="languages"></i>Polyglott</span>
-          <span class="hobby" data-tip="Any type of dish"><i data-lucide="utensils"></i>Cooking</span>
-          <span class="hobby" data-tip="Meeting cool people"><i data-lucide="handshake"></i>Networking</span>
-          <span class="hobby" data-tip="ProductLab, ProcessBerlin, Untitld"><i data-lucide="building-2"></i>Community</span>
-        </div>
-      </div>
-      <!-- Right panel: Photo -->
-      <div style="flex-shrink:0; width:400px; overflow:hidden; position:relative; background:var(--dark); display:flex; align-items:center; justify-content:center;">
-        <img
-          src="https://ahmed-sarkawt.github.io/ablefy-case/imgs/ahmed2.jpg"
-          alt="Ahmed Sulaiman"
-          style="width:100%; height:100%; object-fit:contain; object-position:center; display:block;"
-        />
-      </div>
-    </div>
-  </div>
-
-  <!-- ── SLIDE 3 · Table of Contents ─────────────────────── -->
-  <div class="slide dark">
-    <div class="eyebrow">Today</div>
-    <h2 style="margin-bottom:32px;">What we'll cover</h2>
-    <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
-      <div class="toc-grid">
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 1 · Cover
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-dark active" style="padding:0; overflow:hidden;">
+  <div class="cover-wrap">
+    <div class="cover-main">
+      <span class="cover-badge">Senior PM · Case Study · May 2026</span>
+      <div class="cover-title">topi —<br>Seller Penetration</div>
+      <div class="cover-sub">Three problems at three funnel stages. One prioritized bet. A concrete plan to 2× financed GMV without a single new customer.</div>
+      <div class="cover-rule"></div>
+      <div style="display:flex; align-items:center; gap:14px;">
+        <div style="width:40px; height:40px; border-radius:50%; background:var(--blue); display:flex; align-items:center; justify-content:center; font-size:1rem; font-weight:800; color:white; flex-shrink:0;">A</div>
         <div>
-          <div style="display:flex; align-items:baseline; gap:16px; padding:16px 0; border-bottom:1px solid rgba(255,255,255,0.08);">
-            <span style="font-size:1.8rem; font-weight:800; color:rgba(0,115,207,0.2); letter-spacing:-0.04em; line-height:1; flex-shrink:0;">01</span>
-            <div><div style="font-size:0.92rem; font-weight:600; color:white; margin-bottom:3px;">The Problem</div><div style="font-size:0.78rem; color:rgba(255,255,255,0.4);">Three funnel problems · what they cost · how long to fix</div></div>
-          </div>
-          <div style="display:flex; align-items:baseline; gap:16px; padding:16px 0; border-bottom:1px solid rgba(255,255,255,0.08);">
-            <span style="font-size:1.8rem; font-weight:800; color:rgba(0,115,207,0.2); letter-spacing:-0.04em; line-height:1; flex-shrink:0;">02</span>
-            <div><div style="font-size:0.92rem; font-weight:600; color:white; margin-bottom:3px;">Our Data Lens</div><div style="font-size:0.78rem; color:rgba(255,255,255,0.4);">No internal data · 7 platforms · the one insight that matters</div></div>
-          </div>
-          <div style="display:flex; align-items:baseline; gap:16px; padding:16px 0;">
-            <span style="font-size:1.8rem; font-weight:800; color:rgba(0,115,207,0.2); letter-spacing:-0.04em; line-height:1; flex-shrink:0;">03</span>
-            <div><div style="font-size:0.92rem; font-weight:600; color:white; margin-bottom:3px;">The Decision</div><div style="font-size:0.78rem; color:rgba(255,255,255,0.4);">What we deprioritized · why O1 · JTBD + channel economics</div></div>
-          </div>
-        </div>
-        <div>
-          <div style="display:flex; align-items:baseline; gap:16px; padding:16px 0; border-bottom:1px solid rgba(255,255,255,0.08);">
-            <span style="font-size:1.8rem; font-weight:800; color:rgba(0,115,207,0.2); letter-spacing:-0.04em; line-height:1; flex-shrink:0;">04</span>
-            <div><div style="font-size:0.92rem; font-weight:600; color:white; margin-bottom:3px;">The Plan</div><div style="font-size:0.78rem; color:rgba(255,255,255,0.4);">4 features · 3 success phases · kill switch defined upfront</div></div>
-          </div>
-          <div style="display:flex; align-items:baseline; gap:16px; padding:16px 0; border-bottom:1px solid rgba(255,255,255,0.08);">
-            <span style="font-size:1.8rem; font-weight:800; color:rgba(0,115,207,0.2); letter-spacing:-0.04em; line-height:1; flex-shrink:0;">05</span>
-            <div><div style="font-size:0.92rem; font-weight:600; color:white; margin-bottom:3px;">Recommendation</div><div style="font-size:0.78rem; color:rgba(255,255,255,0.4);">What ships first · the bet · success at 45 days</div></div>
-          </div>
-          <div style="display:flex; align-items:baseline; gap:16px; padding:16px 0;">
-            <span style="font-size:1.8rem; font-weight:800; color:rgba(0,115,207,0.2); letter-spacing:-0.04em; line-height:1; flex-shrink:0;">06</span>
-            <div><div style="font-size:0.92rem; font-weight:600; color:white; margin-bottom:3px;">Q&amp;A &amp; Appendix</div><div style="font-size:0.78rem; color:rgba(255,255,255,0.4);">The stage is yours</div></div>
-          </div>
+          <div style="font-size:0.92rem; font-weight:700; color:white;">Ahmed Sulaiman</div>
+          <div style="font-size:0.78rem; color:rgba(255,255,255,0.48);">Senior Product Manager · Berlin</div>
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- ── SLIDE 4 · The Problem (transition) ──────────────── -->
-  <div class="slide tr-green">
-    <div class="tr-center">
-      <div class="eyebrow">Section 01</div>
-      <div class="tr-title">The Problem</div>
-      <div class="tr-tag">Three funnel stages · three different timelines</div>
-    </div>
-  </div>
-
-  <!-- ── SLIDE 5 · Three Problems Overview ───────────────── -->
-  <div class="slide dark">
-    <div class="eyebrow">The Setup</div>
-    <h2>Three problems. Three funnel stages.</h2>
-    <div style="flex:1; display:grid; grid-template-columns:1fr 1fr 1fr; border-top:1px solid rgba(255,255,255,0.07); margin-top:4px;">
-      <div style="padding:28px 36px 28px 0; border-right:1px solid rgba(255,255,255,0.07);">
-        <div style="font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:rgba(255,255,255,0.3); margin-bottom:20px;">O1 · Top of Funnel</div>
-        <div style="font-size:4.5rem; font-weight:800; color:var(--red); line-height:1; margin-bottom:10px; letter-spacing:-0.04em;">1.5%</div>
-        <div style="font-size:0.88rem; font-weight:600; color:white; margin-bottom:8px;">seller penetration rate</div>
-        <div style="font-size:0.82rem; color:rgba(255,255,255,0.52); line-height:1.65; margin-bottom:20px;">Market average is 3%. Room to 2× GMV with zero new customers.</div>
-        <div style="font-size:0.72rem; font-weight:600; color:var(--blue-light); letter-spacing:0.04em;">Signal in 1–2 weeks</div>
-      </div>
-      <div style="padding:28px 36px; border-right:1px solid rgba(255,255,255,0.07);">
-        <div style="font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:rgba(255,255,255,0.3); margin-bottom:20px;">O2 · Mid Funnel</div>
-        <div style="font-size:4.5rem; font-weight:800; color:rgba(255,255,255,0.28); line-height:1; margin-bottom:10px; letter-spacing:-0.04em;">25%</div>
-        <div style="font-size:0.88rem; font-weight:600; color:rgba(255,255,255,0.65); margin-bottom:8px;">hard churn at contract end</div>
-        <div style="font-size:0.82rem; color:rgba(255,255,255,0.42); line-height:1.65; margin-bottom:20px;">50% buy out (cash event). Max upside: 25% more customers.</div>
-        <div style="font-size:0.72rem; font-weight:600; color:rgba(255,255,255,0.25); letter-spacing:0.04em;">Signal: 36 months</div>
-      </div>
-      <div style="padding:28px 0 28px 36px;">
-        <div style="font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:rgba(255,255,255,0.3); margin-bottom:20px;">O3 · Enterprise</div>
-        <div style="font-size:4.5rem; font-weight:800; color:rgba(255,255,255,0.32); line-height:1; margin-bottom:10px; letter-spacing:-0.04em;">85%</div>
-        <div style="font-size:0.88rem; font-weight:600; color:rgba(255,255,255,0.65); margin-bottom:8px;">loss rate on €50k+ deals</div>
-        <div style="font-size:0.82rem; color:rgba(255,255,255,0.42); line-height:1.65; margin-bottom:20px;">Industry is 30–40%. Losing in pre/post-sale, not price.</div>
-        <div style="font-size:0.72rem; font-weight:600; color:rgba(255,255,255,0.3); letter-spacing:0.04em;">Signal: 3–6 months</div>
+    <div class="cover-sidebar">
+      <div class="cover-sidebar-ghost">%</div>
+      <div class="cover-sidebar-inner">
+        <span class="cover-sidebar-lbl">topi today</span>
+        <div class="cover-sidebar-num">1.5%</div>
+        <div class="cover-sidebar-sep"></div>
+        <span class="cover-sidebar-lbl">market average</span>
+        <div class="cover-sidebar-num2">3%</div>
+        <div class="cover-sidebar-cap">seller penetration rate</div>
       </div>
     </div>
-    <div style="padding:16px 0; border-top:1px solid rgba(255,255,255,0.07);">
-      <span style="font-size:0.86rem; color:rgba(255,255,255,0.55); line-height:1.6;">Each problem sits at a different funnel stage — a different solution, a different stakeholder set, a different time to see results. <strong style="color:rgba(255,255,255,0.82);">We need to choose.</strong></span>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 2 · About Ahmed
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-dark" style="padding:0; overflow:hidden;">
+  <div style="display:grid; grid-template-columns:1fr 380px; height:100%;">
+    <div style="display:flex; flex-direction:column; justify-content:center; padding:56px 56px 56px 72px;">
+      <span class="kicker">Who I Am</span>
+      <div style="font-size:clamp(1.7rem,3.2vw,2.5rem); font-weight:800; color:white; line-height:1.06; letter-spacing:-0.028em; margin-bottom:4px;">Ahmed Sulaiman</div>
+      <div style="font-size:0.88rem; color:rgba(255,255,255,0.40); margin-bottom:24px; letter-spacing:0.02em;">Senior Product Manager</div>
+      <span class="rule" style="margin-bottom:22px;"></span>
+      <p style="font-size:0.86rem; color:rgba(255,255,255,0.65); line-height:1.78; margin-bottom:12px;">I work at the intersection of <strong style="color:white;">data</strong>, <strong style="color:white;">channel economics</strong>, and <strong style="color:white;">product strategy</strong> — turning complex multi-stakeholder environments into clear, executable roadmaps.</p>
+      <p style="font-size:0.86rem; color:rgba(255,255,255,0.65); line-height:1.78; margin-bottom:28px;">I want to join topi to solve real problems at the intersection of <strong style="color:var(--blue-l);">B2B hardware financing</strong> and <strong style="color:var(--blue-l);">channel economics</strong>. The activation gap is real. This case study is my take on how we close it.</p>
+      <div style="font-size:8px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.28); margin-bottom:10px;">Outside work</div>
+      <div style="display:flex; flex-wrap:wrap; gap:7px;">
+        <span class="hobby" data-tip="5:10 Pace Record"><i data-lucide="timer"></i>Running</span>
+        <span class="hobby" data-tip="V4–V5"><i data-lucide="mountain"></i>Bouldering</span>
+        <span class="hobby" data-tip="On 23 mountains"><i data-lucide="compass"></i>Hiking</span>
+        <span class="hobby" data-tip="6 Languages"><i data-lucide="languages"></i>Polyglott</span>
+        <span class="hobby" data-tip="Any type of dish"><i data-lucide="utensils"></i>Cooking</span>
+        <span class="hobby" data-tip="Meeting cool people"><i data-lucide="handshake"></i>Networking</span>
+        <span class="hobby" data-tip="ProductLab, ProcessBerlin, Untitld"><i data-lucide="building-2"></i>Community</span>
+      </div>
+    </div>
+    <div style="overflow:hidden; background:rgba(0,0,0,0.25); position:relative; margin:auto;">
+      <img src="Ahmed_PL.jpg" alt="Ahmed Sulaiman" style="width:100%; object-fit:contain; object-position:center top; display:block; margin-left:-5%; margin-top:-2%; transform:scale(1.45);" />
+      <div style="position:absolute; inset:0; background:linear-gradient(to right, var(--dark) 0%, transparent 18%);"></div>
     </div>
   </div>
+</div>
 
-  <!-- ── SLIDE 6 · O1 Deep Dive ───────────────────────────── -->
-  <div class="slide light">
-    <div class="eyebrow">Problem 01 · Top of Funnel</div>
-    <h2>Seller Penetration</h2>
-    <div class="cols-2" style="gap:24px;">
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 3 · Table of Contents
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-dark">
+  <span class="kicker">In This Presentation</span>
+  <div class="display" style="margin-bottom:32px;">What we'll cover</div>
+  <div style="flex:1; display:grid; grid-template-columns:1fr 1fr; gap:0 56px; align-content:center;">
+    <div>
+      <div style="display:flex; gap:20px; align-items:baseline; padding:15px 0; border-bottom:1px solid rgba(255,255,255,0.07);">
+        <div style="font-size:2.2rem; font-weight:800; color:rgba(126,200,255,0.12); letter-spacing:-0.04em; line-height:1; flex-shrink:0; width:50px;">01</div>
+        <div><div style="font-size:0.9rem; font-weight:700; color:white; margin-bottom:3px;">The Problem</div><div style="font-size:0.74rem; color:rgba(255,255,255,0.36);">Three funnel problems · what they cost · how long to fix</div></div>
+      </div>
+      <div style="display:flex; gap:20px; align-items:baseline; padding:15px 0; border-bottom:1px solid rgba(255,255,255,0.07);">
+        <div style="font-size:2.2rem; font-weight:800; color:rgba(126,200,255,0.12); letter-spacing:-0.04em; line-height:1; flex-shrink:0; width:50px;">02</div>
+        <div><div style="font-size:0.9rem; font-weight:700; color:white; margin-bottom:3px;">Our Data Lens</div><div style="font-size:0.74rem; color:rgba(255,255,255,0.36);">No internal data · 7 platforms · the one insight that matters</div></div>
+      </div>
+      <div style="display:flex; gap:20px; align-items:baseline; padding:15px 0;">
+        <div style="font-size:2.2rem; font-weight:800; color:rgba(126,200,255,0.12); letter-spacing:-0.04em; line-height:1; flex-shrink:0; width:50px;">03</div>
+        <div><div style="font-size:0.9rem; font-weight:700; color:white; margin-bottom:3px;">The Decision</div><div style="font-size:0.74rem; color:rgba(255,255,255,0.36);">What we deprioritized · why O1 · JTBD + channel economics</div></div>
+      </div>
+    </div>
+    <div>
+      <div style="display:flex; gap:20px; align-items:baseline; padding:15px 0; border-bottom:1px solid rgba(255,255,255,0.07);">
+        <div style="font-size:2.2rem; font-weight:800; color:rgba(126,200,255,0.12); letter-spacing:-0.04em; line-height:1; flex-shrink:0; width:50px;">04</div>
+        <div><div style="font-size:0.9rem; font-weight:700; color:white; margin-bottom:3px;">The Plan</div><div style="font-size:0.74rem; color:rgba(255,255,255,0.36);">4 features · 3 success phases · kill switch defined upfront</div></div>
+      </div>
+      <div style="display:flex; gap:20px; align-items:baseline; padding:15px 0; border-bottom:1px solid rgba(255,255,255,0.07);">
+        <div style="font-size:2.2rem; font-weight:800; color:rgba(126,200,255,0.12); letter-spacing:-0.04em; line-height:1; flex-shrink:0; width:50px;">05</div>
+        <div><div style="font-size:0.9rem; font-weight:700; color:white; margin-bottom:3px;">Recommendation</div><div style="font-size:0.74rem; color:rgba(255,255,255,0.36);">What ships first · the bet · success at 45 days</div></div>
+      </div>
+      <div style="display:flex; gap:20px; align-items:baseline; padding:15px 0;">
+        <div style="font-size:2.2rem; font-weight:800; color:rgba(126,200,255,0.12); letter-spacing:-0.04em; line-height:1; flex-shrink:0; width:50px;">06</div>
+        <div><div style="font-size:0.9rem; font-weight:700; color:white; margin-bottom:3px;">Q&amp;A &amp; Appendix</div><div style="font-size:0.74rem; color:rgba(255,255,255,0.36);">The stage is yours</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 4 · Section opener — The Problem
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-blue">
+  <div class="opener-body">
+    <div class="opener-ghost">01</div>
+    <div class="opener-inner">
+      <span class="kicker">Section 01</span>
+      <div class="opener-title">The Problem</div>
+      <div class="opener-sub">Three funnel stages · three different timelines</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 5 · Three Problems Overview
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-dark">
+  <span class="kicker">The Setup</span>
+  <div class="display" style="margin-bottom:0;">Three problems. Three funnel stages.</div>
+  <div style="flex:1; display:grid; grid-template-columns:1fr 1fr 1fr; border-top:1px solid rgba(255,255,255,0.08); margin-top:18px;">
+    <div style="padding:26px 32px 22px 0; border-right:1px solid rgba(255,255,255,0.08);">
+      <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:rgba(255,255,255,0.26); margin-bottom:16px;">O1 · Top of Funnel</div>
+      <div style="font-size:clamp(3.5rem,8vw,5.5rem); font-weight:800; color:var(--red); line-height:0.85; margin-bottom:12px; letter-spacing:-0.05em;">1.5%</div>
+      <div style="font-size:0.84rem; font-weight:600; color:white; margin-bottom:8px;">seller penetration rate</div>
+      <div style="font-size:0.80rem; color:rgba(255,255,255,0.48); line-height:1.70; margin-bottom:18px;">Market average is 3%. Room to 2× GMV with zero new customers.</div>
+      <div style="font-size:8px; font-weight:700; color:var(--blue-l); letter-spacing:0.1em; text-transform:uppercase;">Signal in 1–2 weeks</div>
+    </div>
+    <div style="padding:26px 32px; border-right:1px solid rgba(255,255,255,0.08); opacity:0.38;">
+      <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:rgba(255,255,255,0.26); margin-bottom:16px;">O2 · Mid Funnel</div>
+      <div style="font-size:clamp(3.5rem,8vw,5.5rem); font-weight:800; color:rgba(255,255,255,0.40); line-height:0.85; margin-bottom:12px; letter-spacing:-0.05em;">25%</div>
+      <div style="font-size:0.84rem; font-weight:600; color:rgba(255,255,255,0.60); margin-bottom:8px;">hard churn at contract end</div>
+      <div style="font-size:0.80rem; color:rgba(255,255,255,0.38); line-height:1.70; margin-bottom:18px;">50% buy out (cash event). Max upside: 25% more customers.</div>
+      <div style="font-size:8px; font-weight:700; color:rgba(255,255,255,0.22); letter-spacing:0.1em; text-transform:uppercase;">Signal: 36 months</div>
+    </div>
+    <div style="padding:26px 0 22px 32px; opacity:0.38;">
+      <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:rgba(255,255,255,0.26); margin-bottom:16px;">O3 · Enterprise</div>
+      <div style="font-size:clamp(3.5rem,8vw,5.5rem); font-weight:800; color:rgba(255,255,255,0.40); line-height:0.85; margin-bottom:12px; letter-spacing:-0.05em;">85%</div>
+      <div style="font-size:0.84rem; font-weight:600; color:rgba(255,255,255,0.60); margin-bottom:8px;">loss rate on €50k+ deals</div>
+      <div style="font-size:0.80rem; color:rgba(255,255,255,0.38); line-height:1.70; margin-bottom:18px;">Industry is 30–40%. Losing in pre/post-sale, not price.</div>
+      <div style="font-size:8px; font-weight:700; color:rgba(255,255,255,0.22); letter-spacing:0.1em; text-transform:uppercase;">Signal: 3–6 months</div>
+    </div>
+  </div>
+  <div style="padding:14px 0; border-top:1px solid rgba(255,255,255,0.08);">
+    <span style="font-size:0.84rem; color:rgba(255,255,255,0.48); line-height:1.65;">Each problem sits at a different funnel stage — different stakeholders, different timelines. <strong style="color:rgba(255,255,255,0.80);">We need to choose.</strong></span>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 6 · O1 Deep Dive
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-paper">
+  <span class="kicker">Problem 01 · Top of Funnel</span>
+  <div class="display" style="margin-bottom:28px;">Seller Penetration</div>
+  <div class="cols-2" style="align-items:start; gap:52px;">
+    <div>
+      <div class="stat-cmp">
+        <div class="stat-cmp-l">
+          <div class="stat-lbl" style="color:var(--red);">Today</div>
+          <div class="stat-num" style="color:var(--red);">1.5%</div>
+          <div class="stat-cap">topi seller penetration</div>
+        </div>
+        <div class="stat-cmp-divider"></div>
+        <div class="stat-cmp-r">
+          <div class="stat-lbl" style="color:var(--blue-t);">Market Average</div>
+          <div class="stat-num" style="color:var(--blue-t);">3%</div>
+          <div class="stat-cap">industry benchmark</div>
+        </div>
+      </div>
+      <span class="rule" style="margin-bottom:16px;"></span>
+      <div class="pull"><strong>Hitting 3% = 2× financed GMV.</strong> No new customers. No new markets. No new integrations. The infrastructure is already in place.</div>
+    </div>
+    <div>
+      <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:var(--muted); margin-bottom:16px;">Root causes</div>
+      <div class="e-row">
+        <div class="e-n">1</div>
+        <div><div class="e-t">Incentive misalignment</div><div class="e-d">Rep commission is tied to revenue/margin — not payment method. Offering topi adds steps with no financial upside for the rep.</div></div>
+      </div>
+      <div class="e-row">
+        <div class="e-n">2</div>
+        <div><div class="e-t">No visibility</div><div class="e-d">Sellers cannot see their topi deal pipeline, attach rate, or conversion data. topi feels like a black box after checkout.</div></div>
+      </div>
+      <div class="e-row">
+        <div class="e-n">3</div>
+        <div><div class="e-t">Friction in the conversation</div><div class="e-d">Generating a quote requires leaving the current tool. Longer sales conversation = lower likelihood of offering it at all.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 7 · O2 Deep Dive
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-paper">
+  <span class="kicker">Problem 02 · Mid Funnel</span>
+  <div class="display" style="margin-bottom:24px;">End-of-Contract Lifecycle</div>
+  <div class="cols-2" style="align-items:start; gap:52px;">
+    <div>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0; border:1px solid var(--border); border-radius:8px; overflow:hidden; margin-bottom:18px;">
+        <div style="text-align:center; padding:16px 8px; border-right:1px solid var(--border);">
+          <div style="font-size:2.2rem; font-weight:800; color:var(--blue-t); line-height:1;">50%</div>
+          <div style="font-size:0.66rem; color:var(--muted); margin-top:4px; line-height:1.4;">Buy out device</div>
+          <div class="tag t-blue" style="margin-top:7px; font-size:0.60rem;">Cash event</div>
+        </div>
+        <div style="text-align:center; padding:16px 8px; border-right:1px solid var(--border);">
+          <div style="font-size:2.2rem; font-weight:800; color:var(--red); line-height:1;">25%</div>
+          <div style="font-size:0.66rem; color:var(--muted); margin-top:4px; line-height:1.4;">Return &amp; leave</div>
+          <div class="tag t-red" style="margin-top:7px; font-size:0.60rem;">Hard churn</div>
+        </div>
+        <div style="text-align:center; padding:16px 8px;">
+          <div style="font-size:2.2rem; font-weight:800; color:var(--blue-t); line-height:1;">25%</div>
+          <div style="font-size:0.66rem; color:var(--muted); margin-top:4px; line-height:1.4;">New device</div>
+          <div class="tag t-blue" style="margin-top:7px; font-size:0.60rem;">Upgrade</div>
+        </div>
+      </div>
+      <div class="pull" style="margin-bottom:14px;"><strong>The JTBD has shifted.</strong> Customers are not hiring topi to rent hardware. They are hiring topi to <strong>avoid a large upfront CAPEX</strong>. The 50% buyout confirms it.</div>
+      <div style="padding:12px 16px; background:var(--surface); border-radius:6px; font-size:0.78rem; color:var(--muted); line-height:1.65;"><strong style="color:var(--ink);">Note:</strong> When O1 works, "same rate, new device" at month 34 becomes the next O1 lever.</div>
+    </div>
+    <div style="display:flex; flex-direction:column; justify-content:center;">
+      <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:var(--red); margin-bottom:16px;">Why we deprioritize</div>
+      <div class="e-row">
+        <div class="e-n" style="color:rgba(204,42,56,0.18); font-size:1.4rem; width:36px;">✕</div>
+        <div><div class="e-t">Max 25% upside</div><div class="e-d">Only the hard churn segment. The 50% who bought are generating cash — not a loss.</div></div>
+      </div>
+      <div class="e-row">
+        <div class="e-n" style="color:rgba(204,42,56,0.18); font-size:1.4rem; width:36px;">✕</div>
+        <div><div class="e-t">6–36 months minimum to track</div><div class="e-d">Cannot change existing contract terms. Invisible within 2 quarters.</div></div>
+      </div>
+      <div class="e-row">
+        <div class="e-n" style="color:rgba(204,42,56,0.18); font-size:1.4rem; width:36px;">✕</div>
+        <div><div class="e-t">Deprioritized</div><div class="e-d">Monitor but do not actively resource. Return when O1 validates the reseller channel.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 8 · O3 Deep Dive
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-paper">
+  <span class="kicker">Problem 03 · Enterprise</span>
+  <div class="display" style="margin-bottom:28px;">Large Deal Close Rate</div>
+  <div class="cols-2" style="align-items:start; gap:52px;">
+    <div>
+      <div class="stat-cmp">
+        <div class="stat-cmp-l">
+          <div class="stat-lbl" style="color:var(--red);">Today</div>
+          <div class="stat-num" style="color:var(--red);">15%</div>
+          <div class="stat-cap">close rate on €50k+ deals</div>
+        </div>
+        <div class="stat-cmp-divider"></div>
+        <div class="stat-cmp-r">
+          <div class="stat-lbl" style="color:var(--blue-t);">Healthy B2B Range</div>
+          <div class="stat-num" style="color:var(--blue-t); font-size:clamp(2rem,4.5vw,3.6rem);">30–40%</div>
+          <div class="stat-cap">industry benchmark</div>
+        </div>
+      </div>
+      <span class="rule" style="margin-bottom:16px;"></span>
+      <div class="pull"><strong>2.67× growth potential in enterprise.</strong> PEAC acquisition is a direct unlock — credibility today, partner network tomorrow.</div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:18px; justify-content:center;">
       <div>
-        <div class="compare">
-          <div class="compare-col compare-b">
-            <div class="compare-header">Today</div>
-            <div class="compare-big">
-              <div style="font-size:3.5rem; font-weight:800; color:var(--red); line-height:1;">1.5%</div>
-              <div style="font-size:0.8rem; color:var(--muted); margin-top:6px;">topi seller penetration</div>
-            </div>
-          </div>
-          <div class="compare-divider"></div>
-          <div class="compare-col compare-a">
-            <div class="compare-header">Market Average</div>
-            <div class="compare-big">
-              <div style="font-size:3.5rem; font-weight:800; color:var(--blue-text); line-height:1;">3%</div>
-              <div style="font-size:0.8rem; color:var(--muted); margin-top:6px;">industry benchmark</div>
-            </div>
-          </div>
-        </div>
-        <div style="margin-top:14px; padding:14px 18px; background:rgba(0,115,207,0.05); border:1px solid rgba(0,115,207,0.2); border-radius:10px;">
-          <span class="green-t">Hitting 3% = 2× financed GMV.</span> No new customers. No new markets. No new integrations. The infrastructure is already in place.
-        </div>
+        <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.16em; color:var(--muted); margin-bottom:10px;">Where we're losing</div>
+        <p class="body muted">Not price. Pre/post-sale services — onboarding complexity, contract terms, insurance requirements, procurement documentation. We're in the pipeline but lose in the operational depth phase.</p>
       </div>
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div>
-            <div class="step-title">Incentive misalignment</div>
-            <div class="step-body">Rep commission is tied to revenue/margin — not payment method. Offering topi adds steps with no financial upside for the rep.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div>
-            <div class="step-title">No visibility</div>
-            <div class="step-body">Sellers cannot see their topi deal pipeline, attach rate, or conversion data. topi feels like a black box after checkout.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div>
-            <div class="step-title">Friction in the conversation</div>
-            <div class="step-body">Generating a quote requires leaving the current tool. Longer sales conversation = lower likelihood of offering it at all.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── SLIDE 7 · O2 Deep Dive ───────────────────────────── -->
-  <div class="slide light">
-    <div class="eyebrow">Problem 02 · Mid Funnel</div>
-    <h2>End-of-Contract Lifecycle</h2>
-    <div class="cols-2" style="gap:24px;">
+      <span class="rule"></span>
       <div>
-        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:16px;">
-          <div style="text-align:center; padding:18px 10px; background:rgba(0,115,207,0.06); border:1px solid rgba(0,115,207,0.2); border-radius:10px;">
-            <div style="font-size:2rem; font-weight:800; color:var(--blue-text);">50%</div>
-            <div style="font-size:0.7rem; color:var(--muted); margin-top:4px;">Buy out device</div>
-            <div class="tag t-green" style="margin-top:6px; font-size:0.65rem;">Cash event</div>
-          </div>
-          <div style="text-align:center; padding:18px 10px; background:rgba(255,31,57,0.05); border:1px solid rgba(255,31,57,0.2); border-radius:10px;">
-            <div style="font-size:2rem; font-weight:800; color:var(--red);">25%</div>
-            <div style="font-size:0.7rem; color:var(--muted); margin-top:4px;">Return &amp; leave</div>
-            <div class="tag t-red" style="margin-top:6px; font-size:0.65rem;">Hard churn</div>
-          </div>
-          <div style="text-align:center; padding:18px 10px; background:rgba(59,130,246,0.05); border:1px solid rgba(59,130,246,0.2); border-radius:10px;">
-            <div style="font-size:2rem; font-weight:800; color:#2563eb;">25%</div>
-            <div style="font-size:0.7rem; color:var(--muted); margin-top:4px;">New device</div>
-            <div class="tag t-blue" style="margin-top:6px; font-size:0.65rem;">Upgrade</div>
-          </div>
-        </div>
-        <div class="card">
-          <h3>The JTBD has shifted</h3>
-          <p class="sm muted">Customers are not hiring topi to rent hardware on an ongoing basis. They are hiring topi to avoid a large upfront CAPEX. The 50% buyout confirms it — their plan was to own the device from day one.</p>
-        </div>
+        <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.16em; color:var(--muted); margin-bottom:10px;">PEAC context</div>
+        <p class="body muted"><strong style="color:var(--ink);">Today:</strong> institutional credibility — "Is topi financially stable?" answered with zero product work. <strong style="color:var(--ink);">Later:</strong> PEAC's partner network is a structural unlock. We park this as a future lever.</p>
       </div>
-      <div class="card" style="display:flex; flex-direction:column; justify-content:space-between;">
-        <div>
-          <h3 style="color:var(--red); margin-bottom:12px;">Why we deprioritize this</h3>
-          <div class="steps" style="gap:12px;">
-            <div class="step">
-              <div style="width:20px; height:20px; border-radius:50%; background:rgba(255,31,57,0.1); color:var(--red); display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; flex-shrink:0;">✕</div>
-              <div class="step-body"><strong>Max 25% upside</strong> — only the hard churn segment, not the 50% who already bought</div>
-            </div>
-            <div class="step">
-              <div style="width:20px; height:20px; border-radius:50%; background:rgba(255,31,57,0.1); color:var(--red); display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; flex-shrink:0;">✕</div>
-              <div class="step-body"><strong>36 months</strong> minimum to track — cannot change existing contract terms</div>
-            </div>
-            <div class="step">
-              <div style="width:20px; height:20px; border-radius:50%; background:rgba(255,31,57,0.1); color:var(--red); display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; flex-shrink:0;">✕</div>
-              <div class="step-body"><strong>Invisible in 2 quarters</strong> — no measurable signal in time</div>
-            </div>
-          </div>
-        </div>
-        <div style="margin-top:16px; padding:12px 14px; background:var(--surface); border-radius:8px; font-size:0.8rem; color:var(--muted);">
-          <strong style="color:var(--ink);">Note:</strong> The 50% buyout validates willingness to pay. When O1 works, "same rate, new device" at month 34 becomes the next O1 lever.
-        </div>
+      <span class="rule"></span>
+      <p class="small muted"><strong style="color:var(--ink);">Ranked #2.</strong> Real opportunity, but 3–6 month signal window + multi-team process restructuring required.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 9 · Section opener — Data Lens
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-opener">
+  <div class="opener-body">
+    <div class="opener-ghost">02</div>
+    <div class="opener-inner">
+      <span class="kicker">Section 02</span>
+      <div class="opener-title">Our Data Lens</div>
+      <div class="opener-sub">No internal data. Zero assumptions. One very clear answer.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 10 · The Key Number
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-dark">
+  <div style="flex:1; display:grid; grid-template-columns:1fr 1fr; gap:0; align-items:center;">
+    <div style="padding-right:48px; border-right:1px solid rgba(255,255,255,0.07);">
+      <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:rgba(204,42,56,0.65); margin-bottom:14px;">topi today</div>
+      <div style="font-size:clamp(6rem,16vw,13rem); font-weight:800; color:var(--red); line-height:0.82; letter-spacing:-0.05em;">1.5%</div>
+      <div style="font-size:0.86rem; color:rgba(255,255,255,0.42); margin-top:14px; line-height:1.65;">seller penetration rate<br>across integrated partners</div>
+    </div>
+    <div style="padding-left:48px;">
+      <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:rgba(126,200,255,0.65); margin-bottom:14px;">market average</div>
+      <div style="font-size:clamp(6rem,16vw,13rem); font-weight:800; color:var(--blue-l); line-height:0.82; letter-spacing:-0.05em;">3%</div>
+      <div style="font-size:0.86rem; color:rgba(255,255,255,0.42); margin-top:14px; line-height:1.65;">industry benchmark<br>across comparable platforms</div>
+    </div>
+  </div>
+  <div style="padding:16px 0; border-top:1px solid rgba(255,255,255,0.08);">
+    <div class="pull" style="max-width:640px;">The gap is not a product gap. It is a motivation gap. <strong style="color:white;">This is not a demand problem. It is an activation problem.</strong></div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 11 · JTBD Shift
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-paper">
+  <span class="kicker">Key Insight</span>
+  <div class="display" style="margin-bottom:24px;">The job has shifted — and the data proves it</div>
+  <div style="flex:1; display:flex; flex-direction:column; gap:18px; justify-content:center;">
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0; border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+      <div style="text-align:center; padding:16px 10px; border-right:1px solid var(--border);">
+        <div style="font-size:2.2rem; font-weight:800; color:var(--blue-t); line-height:1;">50%</div>
+        <div style="font-size:0.66rem; font-weight:600; text-transform:uppercase; letter-spacing:0.07em; color:var(--muted); margin-top:5px;">buy out at contract end</div>
+      </div>
+      <div style="text-align:center; padding:16px 10px; border-right:1px solid var(--border);">
+        <div style="font-size:2.2rem; font-weight:800; color:var(--blue-t); line-height:1;">6m–36m</div>
+        <div style="font-size:0.66rem; font-weight:600; text-transform:uppercase; letter-spacing:0.07em; color:var(--muted); margin-top:5px;">planned to own from day one</div>
+      </div>
+      <div style="text-align:center; padding:16px 10px;">
+        <div style="font-size:2.2rem; font-weight:800; color:var(--blue-t); line-height:1;">0</div>
+        <div style="font-size:0.66rem; font-weight:600; text-transform:uppercase; letter-spacing:0.07em; color:var(--muted); margin-top:5px;">actual churn — it's a cash event</div>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 36px 1fr; gap:0; align-items:center;">
+      <div style="padding:18px 20px; background:#fef4f5; border:1px solid rgba(204,42,56,0.14); border-radius:8px;">
+        <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; color:var(--red); margin-bottom:8px;">Old assumption</div>
+        <p style="font-size:0.84rem; color:var(--muted); font-style:italic; line-height:1.65;">"Customers hire topi to rent hardware on an ongoing basis."<br><span style="font-size:0.76rem; margin-top:5px; display:block; font-style:normal;">→ Optimise for renewals. Treat the 50% buyout as churn.</span></p>
+      </div>
+      <div style="display:flex; align-items:center; justify-content:center;">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 11h14M10 5l8 6-8 6" stroke="#0073CF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div style="padding:18px 20px; background:rgba(0,115,207,0.05); border:1px solid rgba(0,115,207,0.16); border-radius:8px;">
+        <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; color:var(--blue-t); margin-bottom:8px;">What the data shows</div>
+        <p style="font-size:0.84rem; color:var(--ink); font-weight:500; line-height:1.65;">"Customers hire topi to <strong>avoid large upfront CAPEX</strong>. They planned to own the device from day one."<br><span style="font-size:0.76rem; font-weight:400; color:var(--muted); margin-top:5px; display:block;">→ The 50% buyout isn't churn. It's proof of financing behaviour.</span></p>
+      </div>
+    </div>
+    <div style="padding:13px 18px; border-left:2px solid var(--blue); background:rgba(0,115,207,0.04); border-radius:0 6px 6px 0;">
+      <span style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; color:var(--blue-t);">New seller script · </span>
+      <span style="font-size:0.84rem; color:var(--ink); font-style:italic;">"Avoid CAPEX, stay liquid, get the hardware you need today. Pay over 36 months."</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 12 · Section opener — The Decision
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-blue">
+  <div class="opener-body">
+    <div class="opener-ghost">03</div>
+    <div class="opener-inner">
+      <span class="kicker">Section 03</span>
+      <div class="opener-title">The Decision</div>
+      <div class="opener-sub">O2 deprioritized · O3 ranked second · O1 is the bet</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 13 · Why O1
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-white">
+  <span class="kicker">We Choose O1 — Seller Penetration</span>
+  <div class="display" style="margin-bottom:28px;">Three reasons. No tradeoffs.</div>
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+    <div style="display:flex; gap:28px; align-items:baseline; padding:20px 0; border-bottom:1px solid var(--border);">
+      <div style="font-size:3.4rem; font-weight:800; color:rgba(0,115,207,0.10); line-height:1; flex-shrink:0; width:50px; letter-spacing:-0.04em;">1</div>
+      <div style="flex:1;">
+        <div style="font-size:0.94rem; font-weight:700; color:var(--ink); margin-bottom:5px;">Fastest feedback loop <span style="font-size:0.72rem; font-weight:600; color:var(--blue-t); margin-left:8px;">Signal in 2 weeks</span></div>
+        <div style="font-size:0.86rem; color:var(--muted); line-height:1.72;">Partners are already integrated. No upfront engineering required. First signal in 1–2 weeks, comparing against last year's quarter.</div>
+      </div>
+    </div>
+    <div style="display:flex; gap:28px; align-items:baseline; padding:20px 0; border-bottom:1px solid var(--border);">
+      <div style="font-size:3.4rem; font-weight:800; color:rgba(0,115,207,0.10); line-height:1; flex-shrink:0; width:50px; letter-spacing:-0.04em;">2</div>
+      <div style="flex:1;">
+        <div style="font-size:0.94rem; font-weight:700; color:var(--ink); margin-bottom:5px;">Highest leverage <span style="font-size:0.72rem; font-weight:600; color:var(--blue-t); margin-left:8px;">2× GMV potential</span></div>
+        <div style="font-size:0.86rem; color:var(--muted); line-height:1.72;">Doubling penetration from 1.5% to 3% doubles financed GMV with the current partner base. <strong style="color:var(--ink);">No new customers. No new markets. No new integrations.</strong></div>
+      </div>
+    </div>
+    <div style="display:flex; gap:28px; align-items:baseline; padding:20px 0;">
+      <div style="font-size:3.4rem; font-weight:800; color:rgba(0,115,207,0.10); line-height:1; flex-shrink:0; width:50px; letter-spacing:-0.04em;">3</div>
+      <div style="flex:1;">
+        <div style="font-size:0.94rem; font-weight:700; color:var(--ink); margin-bottom:5px;">We control it <span style="font-size:0.72rem; font-weight:600; color:var(--blue-t); margin-left:8px;">Internal lever</span></div>
+        <div style="font-size:0.86rem; color:var(--muted); line-height:1.72;">This is an internal incentive and process adjustment — not dependent on end-user behavior change or compliance timelines. <strong style="color:var(--ink);">We can move without external approvals.</strong></div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ── SLIDE 8 · O3 Deep Dive ───────────────────────────── -->
-  <div class="slide light">
-    <div class="eyebrow">Problem 03 · Enterprise</div>
-    <h2>Large Deal Close Rate</h2>
-    <div class="cols-2" style="gap:24px;">
-      <div>
-        <div class="compare">
-          <div class="compare-col compare-b">
-            <div class="compare-header">Today</div>
-            <div class="compare-big">
-              <div style="font-size:3.5rem; font-weight:800; color:var(--red); line-height:1;">15%</div>
-              <div style="font-size:0.8rem; color:var(--muted); margin-top:6px;">close rate on €50k+ deals</div>
-            </div>
-          </div>
-          <div class="compare-divider"></div>
-          <div class="compare-col compare-a">
-            <div class="compare-header">Healthy B2B Range</div>
-            <div class="compare-big">
-              <div style="font-size:2.6rem; font-weight:800; color:var(--blue-text); line-height:1;">30–40%</div>
-              <div style="font-size:0.8rem; color:var(--muted); margin-top:6px;">industry benchmark</div>
-            </div>
-          </div>
-        </div>
-        <div style="margin-top:14px; padding:14px 18px; background:rgba(0,115,207,0.05); border:1px solid rgba(0,115,207,0.2); border-radius:10px;">
-          <span class="green-t">2.67× growth potential in enterprise.</span> PEAC acquisition is a direct unlock — credibility today, partner network tomorrow.
-        </div>
-      </div>
-      <div>
-        <div class="card" style="margin-bottom:12px;">
-          <h3>Where we're losing</h3>
-          <p class="sm muted">Not price. Pre/post-sale services — onboarding complexity, contract terms, insurance requirements, procurement documentation. We're in the pipeline but lose in the operational depth phase.</p>
-        </div>
-        <div class="card" style="margin-bottom:12px;">
-          <h3>PEAC context</h3>
-          <p class="sm muted"><strong>Today:</strong> institutional credibility. "Is topi financially stable?" closed with zero product work. <strong>Later:</strong> PEAC's partner network is a structural unlock for O1 and O3 — we park this as a future lever.</p>
-        </div>
-        <div style="padding:10px 14px; background:var(--surface); border-radius:8px; font-size:0.78rem; color:var(--muted);">
-          <strong style="color:var(--ink);">Ranked #2.</strong> Real opportunity, but 3–6 month signal window + multi-team process restructuring required.
-        </div>
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 14 · Two Frameworks
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-paper">
+  <span class="kicker">Decision Frameworks</span>
+  <div class="display" style="margin-bottom:28px;">Two frameworks. One convergent answer.</div>
+  <div class="cols-2" style="align-items:start; gap:52px;">
+    <div>
+      <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:var(--blue-t); padding-bottom:10px; border-bottom:2px solid var(--blue); margin-bottom:16px;">Framework 1 · JTBD</div>
+      <div style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:10px;">Jobs-to-be-Done</div>
+      <p class="body muted" style="margin-bottom:18px;">The job has shifted from "rent hardware" to "avoid CAPEX." This tells us what the seller conversation should sound like — and why the 50% buyout is a signal, not a loss.</p>
+      <div class="pull">
+        <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--blue-t); margin-bottom:7px;">The seller pitch reframe</div>
+        <span style="font-style:italic;">"Get the hardware you need today. No large upfront cost. Stay liquid. Pay over 36 months."</span>
       </div>
     </div>
-  </div>
-
-  <!-- ── SLIDE 9 · Data Lens (transition) ─────────────────── -->
-  <div class="slide tr-dark">
-    <div class="tr-center">
-      <div class="eyebrow">Section 02</div>
-      <div class="tr-title">Our Data Lens</div>
-      <div class="tr-tag">No internal data. Zero assumptions. One very clear answer.</div>
-    </div>
-  </div>
-
-  <!-- ── SLIDE 10 · The Key Number ────────────────────────── -->
-  <div class="slide dark">
-    <div class="eyebrow" style="text-align:center;">The single most important data point</div>
-    <div class="stat-wrap">
-      <div class="stat-big" style="color:var(--red);">1.5%</div>
-      <div class="stat-vs">vs</div>
-      <div class="stat-big" style="color:var(--blue);">3%</div>
-      <div class="stat-sub" style="margin-top:20px; max-width:520px;">topi today &nbsp;·&nbsp; market average<br><br>
-        <span style="color:rgba(255,255,255,0.7); font-size:1rem; font-weight:500;">The gap is not a product gap. It is a motivation gap.<br>This is not a demand problem. <strong style="color:var(--blue);">It is an activation problem.</strong></span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── SLIDE 11 · JTBD Shift ────────────────────────────── -->
-  <div class="slide white">
-    <div class="eyebrow">Key Insight</div>
-    <h2>The job has shifted — and the data proves it</h2>
-    <div style="flex:1; display:flex; flex-direction:column; gap:20px; justify-content:center;">
-      <!-- Evidence row -->
-      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;">
-        <div style="text-align:center; padding:20px 14px; background:var(--surface); border-radius:12px; border:1px solid var(--border);">
-          <div style="font-size:2.6rem; font-weight:800; color:var(--blue-text); line-height:1;">50%</div>
-          <div style="font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-top:6px;">buy out at end of contract</div>
-        </div>
-        <div style="text-align:center; padding:20px 14px; background:var(--surface); border-radius:12px; border:1px solid var(--border);">
-          <div style="font-size:2.6rem; font-weight:800; color:var(--blue-text); line-height:1;">36mo</div>
-          <div style="font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-top:6px;">planned to own from day one</div>
-        </div>
-        <div style="text-align:center; padding:20px 14px; background:rgba(0,115,207,0.06); border-radius:12px; border:1px solid rgba(0,115,207,0.2);">
-          <div style="font-size:2.6rem; font-weight:800; color:var(--blue-text); line-height:1;">0</div>
-          <div style="font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-top:6px;">churn — it's a cash event</div>
-        </div>
-      </div>
-      <!-- Shift arrow -->
-      <div style="display:grid; grid-template-columns:1fr 48px 1fr; gap:0; align-items:center;">
-        <div style="padding:22px 24px; background:#fff8f8; border:1px solid rgba(255,31,57,0.18); border-radius:12px;">
-          <div style="font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--red); margin-bottom:8px;">Old assumption</div>
-          <p style="font-size:0.88rem; color:var(--muted); font-style:italic; line-height:1.6;">"Customers hire topi to rent hardware on an ongoing basis."<br><span style="font-size:0.78rem; margin-top:6px; display:block;">→ Optimise for renewals. Treat the 50% buyout as churn.</span></p>
-        </div>
-        <div style="display:flex; align-items:center; justify-content:center;">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 14h16M16 8l6 6-6 6" stroke="#0073CF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div style="padding:22px 24px; background:rgba(0,115,207,0.05); border:1px solid rgba(0,115,207,0.2); border-radius:12px;">
-          <div style="font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--blue-text); margin-bottom:8px;">What the data shows</div>
-          <p style="font-size:0.88rem; color:var(--ink); font-weight:500; line-height:1.6;">"Customers hire topi to <strong>avoid large upfront CAPEX</strong>. They planned to own the device from day one."<br><span style="font-size:0.78rem; font-weight:400; color:var(--muted); margin-top:6px; display:block;">→ The 50% buyout isn't churn. It's proof of financing behaviour.</span></p>
-        </div>
-      </div>
-      <!-- New seller script callout -->
-      <div style="padding:14px 20px; background:rgba(0,115,207,0.07); border-left:3px solid var(--blue); border-radius:0 8px 8px 0;">
-        <span style="font-size:0.78rem; font-weight:700; color:var(--blue-text); text-transform:uppercase; letter-spacing:0.06em;">New seller script · </span>
-        <span style="font-size:0.88rem; color:var(--ink); font-style:italic;">"Avoid CAPEX, stay liquid, get the hardware you need today. Pay over 36 months."</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── SLIDE 12 · The Decision (transition) ─────────────── -->
-  <div class="slide tr-green">
-    <div class="tr-center">
-      <div class="eyebrow">Section 03</div>
-      <div class="tr-title">The Decision</div>
-      <div class="tr-tag">O2 deprioritized · O3 ranked second · O1 is the bet</div>
-    </div>
-  </div>
-
-  <!-- ── SLIDE 13 · Why O1 ─────────────────────────────────── -->
-  <div class="slide white">
-    <div class="eyebrow">We Choose O1 — Seller Penetration</div>
-    <h2>Three reasons. No tradeoffs.</h2>
-    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:0;">
-      <div style="display:flex; gap:28px; align-items:baseline; padding:22px 0; border-bottom:1px solid var(--border);">
-        <div style="font-size:3.5rem; font-weight:800; color:rgba(0,115,207,0.12); line-height:1; flex-shrink:0; width:52px; letter-spacing:-0.04em;">1</div>
-        <div style="flex:1;">
-          <div style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:5px;">Fastest feedback loop <span style="font-size:0.75rem; font-weight:600; color:var(--blue-text); margin-left:8px;">Signal in 2 weeks</span></div>
-          <div style="font-size:0.9rem; color:var(--muted); line-height:1.65;">Partners are already integrated. No upfront engineering required. First signal in <strong style="color:var(--ink);">1–2 weeks</strong>, comparing against last year's quarter.</div>
-        </div>
-      </div>
-      <div style="display:flex; gap:28px; align-items:baseline; padding:22px 0; border-bottom:1px solid var(--border);">
-        <div style="font-size:3.5rem; font-weight:800; color:rgba(0,115,207,0.12); line-height:1; flex-shrink:0; width:52px; letter-spacing:-0.04em;">2</div>
-        <div style="flex:1;">
-          <div style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:5px;">Highest leverage <span style="font-size:0.75rem; font-weight:600; color:var(--blue-text); margin-left:8px;">2× GMV potential</span></div>
-          <div style="font-size:0.9rem; color:var(--muted); line-height:1.65;">Doubling penetration from 1.5% to 3% doubles financed GMV with the current partner base. <strong style="color:var(--ink);">No new customers. No new markets. No new integrations.</strong></div>
-        </div>
-      </div>
-      <div style="display:flex; gap:28px; align-items:baseline; padding:22px 0;">
-        <div style="font-size:3.5rem; font-weight:800; color:rgba(0,115,207,0.12); line-height:1; flex-shrink:0; width:52px; letter-spacing:-0.04em;">3</div>
-        <div style="flex:1;">
-          <div style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:5px;">We control it <span style="font-size:0.75rem; font-weight:600; color:var(--blue-text); margin-left:8px;">Internal lever</span></div>
-          <div style="font-size:0.9rem; color:var(--muted); line-height:1.65;">This is an internal incentive and process adjustment — not dependent on end-user behavior change or compliance timelines. <strong style="color:var(--ink);">We can move without external approvals.</strong></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── SLIDE 14 · Two Frameworks ────────────────────────── -->
-  <div class="slide light">
-    <div class="eyebrow">Decision Frameworks</div>
-    <h2>Two frameworks. One convergent answer.</h2>
-    <div class="cols-2">
-      <div class="card" style="border-top:3px solid var(--blue);">
-        <div style="font-size:0.68rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--blue-text); font-weight:600; margin-bottom:8px;">Framework 1 · JTBD</div>
-        <h3 style="margin-bottom:10px;">Jobs-to-be-Done</h3>
-        <p class="sm muted" style="margin-bottom:16px;">The job has shifted from "rent hardware" to "avoid CAPEX." This tells us what the seller conversation should sound like — and why the 50% buyout is a signal, not a loss.</p>
-        <div style="padding:12px 14px; background:var(--surface); border-radius:8px;">
-          <div style="font-size:0.76rem; font-weight:600; margin-bottom:4px;">The seller pitch reframe</div>
-          <p style="font-size:0.8rem; color:var(--muted); font-style:italic;">"Get the hardware you need today. No large upfront cost. Stay liquid. Pay over 36 months."</p>
-        </div>
-      </div>
-      <div class="card" style="border-top:3px solid var(--blue);">
-        <div style="font-size:0.68rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--blue-text); font-weight:600; margin-bottom:8px;">Framework 2 · Channel Economics</div>
-        <h3 style="margin-bottom:10px;">The Motivation Gap</h3>
-        <p class="sm muted" style="margin-bottom:16px;">The gap between 1.5% and 3% is not a product gap. Sellers who are motivated and enabled close topi deals. Those who aren't — don't. We fix the motivation layer.</p>
-        <div style="display:flex; flex-direction:column; gap:8px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:var(--surface); border-radius:6px;">
-            <span class="sm">Motivated + enabled seller</span>
-            <span class="tag t-green">~3% penetration</span>
-          </div>
-          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:var(--surface); border-radius:6px;">
-            <span class="sm">Unmotivated seller</span>
-            <span class="tag t-red">~0.5% penetration</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── SLIDE 15 · The Plan (transition) ─────────────────── -->
-  <div class="slide tr-dark">
-    <div class="tr-center">
-      <div class="eyebrow">Section 04</div>
-      <div class="tr-title">The Plan</div>
-      <div class="tr-tag">4 features · 3 success phases · kill switch at day 45</div>
-    </div>
-  </div>
-
-  <!-- ── SLIDE 16 · Success Phases ────────────────────────── -->
-  <div class="slide light">
-    <div class="eyebrow">How We Define Success</div>
-    <h2>Three phases. One kill switch.</h2>
-
-    <!-- Timeline -->
-    <div style="position:relative; display:flex; gap:0; flex:1; flex-direction:column; justify-content:center; margin-bottom:20px;">
-      <!-- Connector line -->
-      <div style="position:absolute; top:28px; left:28px; width:calc(100% - 56px); height:2px; background:linear-gradient(to right, var(--blue) 0%, rgba(0,115,207,0.3) 60%, rgba(0,115,207,0.1) 100%); z-index:0;"></div>
-      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px; position:relative; z-index:1;">
-        <!-- Phase 1 -->
-        <div>
-          <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
-            <div style="width:56px; height:56px; border-radius:50%; background:var(--blue); color:white; display:flex; align-items:center; justify-content:center; font-size:1.1rem; font-weight:800; flex-shrink:0; box-shadow:0 0 0 4px white, 0 0 0 6px rgba(0,115,207,0.2);">1</div>
-            <div>
-              <div style="font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--blue-text);">Days 1–14</div>
-              <div style="font-size:1rem; font-weight:700; color:var(--ink);">Launch</div>
-            </div>
-          </div>
-          <div style="background:white; border:1px solid var(--border); border-radius:10px; padding:16px;">
-            <p style="font-size:0.82rem; color:var(--muted); line-height:1.6; margin-bottom:10px;">Launch SPIFF to top-performing partners. Establish baseline metrics.</p>
-            <div style="font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink); margin-bottom:4px;">Track</div>
-            <p style="font-size:0.78rem; color:var(--muted);">New deal requests vs. baseline · Quote attachment rate</p>
-          </div>
-        </div>
-        <!-- Phase 2 -->
-        <div>
-          <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
-            <div style="width:56px; height:56px; border-radius:50%; background:var(--blue); color:white; display:flex; align-items:center; justify-content:center; font-size:1.1rem; font-weight:800; flex-shrink:0; box-shadow:0 0 0 4px white, 0 0 0 6px rgba(0,115,207,0.2);">2</div>
-            <div>
-              <div style="font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--blue-text);">Days 15–45</div>
-              <div style="font-size:1rem; font-weight:700; color:var(--ink);">Validate</div>
-            </div>
-          </div>
-          <div style="background:white; border:1px solid var(--border); border-radius:10px; padding:16px;">
-            <p style="font-size:0.82rem; color:var(--muted); line-height:1.6; margin-bottom:10px;">Is activation changing? Are more reps offering topi mid-conversation?</p>
-            <div style="font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink); margin-bottom:4px;">Track</div>
-            <p style="font-size:0.78rem; color:var(--muted);">Reseller activation rate · Quote attachment rate · Calculator usage</p>
-          </div>
-        </div>
-        <!-- Phase 3 -->
-        <div>
-          <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
-            <div style="width:56px; height:56px; border-radius:50%; background:rgba(0,115,207,0.3); color:white; display:flex; align-items:center; justify-content:center; font-size:1.1rem; font-weight:800; flex-shrink:0; box-shadow:0 0 0 4px white, 0 0 0 6px rgba(0,115,207,0.1);">3</div>
-            <div>
-              <div style="font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--blue-text);">Months 3–6</div>
-              <div style="font-size:1rem; font-weight:700; color:var(--ink);">Scale</div>
-            </div>
-          </div>
-          <div style="background:white; border:1px solid var(--border); border-radius:10px; padding:16px;">
-            <p style="font-size:0.82rem; color:var(--muted); line-height:1.6; margin-bottom:10px;">Are we moving toward 3% seller penetration?</p>
-            <div style="font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink); margin-bottom:4px;">Track</div>
-            <p style="font-size:0.78rem; color:var(--muted);">Seller penetration % · Financed GMV (€)</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Kill switch — prominent -->
-    <div style="background:#fff2f3; border:2px solid var(--red); border-radius:12px; padding:18px 22px; display:flex; gap:16px; align-items:center;">
-      <div style="width:44px; height:44px; border-radius:50%; background:var(--red); color:white; display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0;">🔴</div>
-      <div>
-        <div style="font-size:0.8rem; font-weight:800; color:var(--red); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:4px;">Kill Switch · Day 45</div>
-        <p style="font-size:0.88rem; color:#7a1e24; line-height:1.55;">If day-45 shows &lt;10% change in reseller activation → stop. Revisit the blocker hypothesis. Problem may be pre-qual friction, not incentives. <strong>We do not wait 6 months to find out.</strong></p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── SLIDE 17 · Feature Roadmap Table ─────────────────── -->
-  <div class="slide white">
-    <div class="eyebrow">The Plan · Feature Roadmap</div>
-    <h2>Four features. Ordered by impact vs. effort.</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Feature</th>
-          <th>Engineering</th>
-          <th>Impact</th>
-          <th>Ships</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="font-weight:700; color:var(--blue-text);">01</td>
-          <td>
-            <div style="font-weight:600; font-size:0.88rem;">Tiered Seller SPIFF Program</div>
-            <div class="sm muted" style="margin-top:2px;">Cash bonus directly to the rep for every topi-financed deal closed</div>
-          </td>
-          <td><span class="tag t-green">Low</span></td>
-          <td><span class="tag" style="background:rgba(0,115,207,0.2); color:var(--blue-text);">Very High</span></td>
-          <td style="font-weight:600; color:var(--blue-text);">Immediately</td>
-        </tr>
-        <tr>
-          <td style="font-weight:700;">02</td>
-          <td>
-            <div style="font-weight:600; font-size:0.88rem;">Email Campaign Kit</div>
-            <div class="sm muted" style="margin-top:2px;">Pre-built B2B templates sellers send to their existing customer list</div>
-          </td>
-          <td><span class="tag t-green">Low</span></td>
-          <td><span class="tag t-blue">Medium-High</span></td>
-          <td>Week 1–2</td>
-        </tr>
-        <tr>
-          <td style="font-weight:700;">03</td>
-          <td>
-            <div style="font-weight:600; font-size:0.88rem;">Pipeline Dashboard</div>
-            <div class="sm muted" style="margin-top:2px;">Real-time deal-stage view per reseller — data already in backend</div>
-          </td>
-          <td><span class="tag t-yellow">Medium</span></td>
-          <td><span class="tag t-blue">High</span></td>
-          <td>Q2</td>
-        </tr>
-        <tr>
-          <td style="font-weight:700;">04</td>
-          <td>
-            <div style="font-weight:600; font-size:0.88rem;">Live Quote Generator</div>
-            <div class="sm muted" style="margin-top:2px;">30-second shareable topi quote mid-conversation, for every reseller</div>
-          </td>
-          <td><span class="tag t-red">High</span></td>
-          <td><span class="tag t-neutral">Medium</span></td>
-          <td>Q2–Q3</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- ── SLIDE 18 · Feature 1: SPIFF ──────────────────────── -->
-  <div class="slide light">
-    <div class="eyebrow">Feature 01 · Ships Immediately</div>
-    <h2>Tiered Seller SPIFF Program</h2>
-    <div class="cols-2" style="gap:24px;">
-      <div>
-        <table style="margin-bottom:14px;">
-          <thead><tr><th>Deal Size</th><th>Rep Bonus</th></tr></thead>
-          <tbody>
-            <tr><td>&lt; €5k</td><td style="font-weight:600; color:var(--blue-text);">€20–€50 flat</td></tr>
-            <tr><td>€5k – €20k</td><td style="font-weight:600; color:var(--blue-text);">€100–€250</td></tr>
-            <tr><td>€20k – €50k</td><td style="font-weight:600; color:var(--blue-text);">€300–€450</td></tr>
-            <tr><td>&gt; €50k</td><td style="font-weight:600; color:var(--blue-text);">€500–€1,000 + quarterly prize pool</td></tr>
-          </tbody>
-        </table>
-        <div style="padding:12px 16px; background:rgba(0,115,207,0.05); border:1px solid rgba(0,115,207,0.2); border-radius:10px; font-size:0.82rem;">
-          <strong style="color:var(--blue-text);">Why it changes behavior:</strong> Bonus goes to the rep directly — not the company. Offering topi now has a clear personal financial upside. The "why would I add steps?" objection disappears.
-        </div>
-      </div>
+    <div>
+      <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:var(--blue-t); padding-bottom:10px; border-bottom:2px solid var(--blue); margin-bottom:16px;">Framework 2 · Channel Economics</div>
+      <div style="font-size:1rem; font-weight:700; color:var(--ink); margin-bottom:10px;">The Motivation Gap</div>
+      <p class="body muted" style="margin-bottom:18px;">The gap between 1.5% and 3% is not a product gap. Sellers who are motivated and enabled close topi deals. Those who aren't — don't. We fix the motivation layer.</p>
       <div style="display:flex; flex-direction:column; gap:8px;">
-        <!-- Stakeholder 1 -->
-        <div class="card" style="border-left:3px solid var(--blue);">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-            <div style="font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--blue-text);">Sales Rep / Channel Partner</div>
-            <span class="tag t-red">Root blocker</span>
-          </div>
-          <div style="font-size:0.78rem; margin-bottom:4px;"><strong>JTBD:</strong> <span style="color:var(--muted);">Make me earn more per deal without adding complexity to my flow.</span></div>
-          <div style="font-size:0.78rem; color:var(--red);"><strong>Blocker:</strong> Commission tied to revenue/margin — no incentive to offer topi. Adding it means extra steps with zero personal upside.</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:var(--surface); border-radius:6px;">
+          <span style="font-size:0.82rem; color:var(--ink);">Motivated + enabled seller</span>
+          <span class="tag t-blue">~3% penetration</span>
         </div>
-        <!-- Stakeholder 2 -->
-        <div class="card" style="border-left:3px solid rgba(0,115,207,0.4);">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-            <div style="font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--blue-text);">VP of Partnership</div>
-            <span class="tag t-blue">Sponsor</span>
-          </div>
-          <div style="font-size:0.78rem; margin-bottom:4px;"><strong>JTBD:</strong> <span style="color:var(--muted);">Hit GMV targets without adding headcount or renegotiating partner contracts.</span></div>
-          <div style="font-size:0.78rem; color:var(--red);"><strong>Blocker:</strong> Corporate incentive structures are slow. Can't directly motivate individual reps at scale without a cash mechanism.</div>
-        </div>
-        <!-- Stakeholder 3 -->
-        <div class="card" style="border-left:3px solid rgba(0,115,207,0.4);">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-            <div style="font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--blue-text);">Head of Engineering</div>
-            <span class="tag t-neutral">Phase 2</span>
-          </div>
-          <div style="font-size:0.78rem; margin-bottom:4px;"><strong>JTBD:</strong> <span style="color:var(--muted);">Prioritise eng resources on work with the highest business impact per sprint.</span></div>
-          <div style="font-size:0.78rem; color:var(--red);"><strong>Blocker:</strong> v1 needs zero engineering. Phase 2 dashboard requires CRM wire-up — data already exists, just needs surfacing.</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:var(--surface); border-radius:6px;">
+          <span style="font-size:0.82rem; color:var(--ink);">Unmotivated seller</span>
+          <span class="tag t-red">~0.5% penetration</span>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ── SLIDE 19 · Features 2+3 ──────────────────────────── -->
-  <div class="slide light">
-    <div class="eyebrow">Features 02 + 03</div>
-    <h2>Email Campaign Kit + Pipeline Dashboard</h2>
-    <div class="cols-2" style="gap:24px;">
-      <!-- Feature 02 -->
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 15 · Section opener — The Plan
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-opener">
+  <div class="opener-body">
+    <div class="opener-ghost">04</div>
+    <div class="opener-inner">
+      <span class="kicker">Section 04</span>
+      <div class="opener-title">The Plan</div>
+      <div class="opener-sub">4 features · 3 success phases · kill switch at day 45</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 16 · Success Phases
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-paper">
+  <span class="kicker">How We Define Success</span>
+  <div class="display" style="margin-bottom:28px;">Three phases. One kill switch.</div>
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:0;">
+
+    <!-- Step 1 -->
+    <div style="display:flex; gap:0; align-items:stretch; padding:18px 0; border-top:1px solid var(--border);">
+      <div style="display:flex; flex-direction:column; align-items:center; margin-right:20px; flex-shrink:0;">
+        <div style="width:34px; height:34px; border-radius:50%; background:var(--blue); color:white; display:flex; align-items:center; justify-content:center; font-size:0.82rem; font-weight:800; flex-shrink:0;">1</div>
+        <div style="flex:1; width:1px; background:var(--border); margin-top:8px;"></div>
+      </div>
+      <div style="flex:1; padding-bottom:4px;">
+        <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:8px;">
+          <div style="font-size:0.92rem; font-weight:700; color:var(--ink);">Launch</div>
+          <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--blue-t);">Days 1–14</div>
+        </div>
+        <p style="font-size:0.82rem; color:var(--muted); line-height:1.68; margin-bottom:8px;">Launch SPIFF to top-performing partners. Establish baseline metrics.</p>
+        <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--ink); margin-bottom:3px;">Track</div>
+        <p style="font-size:0.76rem; color:var(--muted);">New deal requests vs. baseline · Quote attachment rate</p>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div style="display:flex; gap:0; align-items:stretch; padding:18px 0; border-top:1px solid var(--border);">
+      <div style="display:flex; flex-direction:column; align-items:center; margin-right:20px; flex-shrink:0;">
+        <div style="width:34px; height:34px; border-radius:50%; background:var(--blue); color:white; display:flex; align-items:center; justify-content:center; font-size:0.82rem; font-weight:800; flex-shrink:0;">2</div>
+        <div style="flex:1; width:1px; background:var(--border); margin-top:8px;"></div>
+      </div>
+      <div style="flex:1; padding-bottom:4px;">
+        <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:8px;">
+          <div style="font-size:0.92rem; font-weight:700; color:var(--ink);">Validate</div>
+          <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--blue-t);">Days 15–45</div>
+        </div>
+        <p style="font-size:0.82rem; color:var(--muted); line-height:1.68; margin-bottom:8px;">Is activation changing? Are more reps offering topi mid-conversation?</p>
+        <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--ink); margin-bottom:3px;">Track</div>
+        <p style="font-size:0.76rem; color:var(--muted);">Reseller activation rate · Quote attachment rate · Calculator usage</p>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div style="display:flex; gap:0; align-items:stretch; padding:18px 0; border-top:1px solid var(--border);">
+      <div style="display:flex; flex-direction:column; align-items:center; margin-right:20px; flex-shrink:0;">
+        <div style="width:34px; height:34px; border-radius:50%; background:rgba(0,115,207,0.30); color:white; display:flex; align-items:center; justify-content:center; font-size:0.82rem; font-weight:800; flex-shrink:0;">3</div>
+        <div style="flex:1; width:1px; background:var(--border); margin-top:8px;"></div>
+      </div>
+      <div style="flex:1; padding-bottom:4px;">
+        <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:8px;">
+          <div style="font-size:0.92rem; font-weight:700; color:var(--ink);">Scale</div>
+          <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--blue-t);">Months 3–6</div>
+        </div>
+        <p style="font-size:0.82rem; color:var(--muted); line-height:1.68; margin-bottom:8px;">Are we moving toward 3% seller penetration?</p>
+        <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--ink); margin-bottom:3px;">Track</div>
+        <p style="font-size:0.76rem; color:var(--muted);">Seller penetration % · Financed GMV (€)</p>
+      </div>
+    </div>
+
+    <!-- Kill switch -->
+    <div style="display:flex; gap:0; align-items:flex-start; padding:18px 0; border-top:1px solid var(--border);">
+      <div style="display:flex; flex-direction:column; align-items:center; margin-right:20px; flex-shrink:0;">
+        <div style="width:34px; height:34px; border-radius:50%; background:rgba(204,42,56,0.10); border:1px solid rgba(204,42,56,0.25); color:var(--red); display:flex; align-items:center; justify-content:center; font-size:0.9rem; font-weight:700; flex-shrink:0;">✕</div>
+      </div>
+      <div style="flex:1;">
+        <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.16em; color:var(--red); margin-bottom:7px;">Kill Switch · Day 45</div>
+        <p style="font-size:0.82rem; color:var(--muted); line-height:1.68;">If day-45 shows &lt;10% change in reseller activation → stop. Revisit the blocker hypothesis. Problem may be pre-qual friction, not incentives. <strong style="color:var(--ink);">We do not wait 6 months to find out.</strong></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 17 · Feature Roadmap Table
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-white">
+  <span class="kicker">The Plan · Feature Roadmap</span>
+  <div class="display" style="margin-bottom:28px;">Four features. Ordered by impact vs. effort.</div>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th><th>Feature</th><th>Engineering</th><th>Impact</th><th>Ships</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:700; color:var(--blue-t);">01</td>
+        <td><div style="font-weight:600; font-size:0.86rem;">Tiered Seller SPIFF Program</div><div style="font-size:0.76rem; color:var(--muted); margin-top:2px;">Cash bonus directly to the rep for every topi-financed deal closed</div></td>
+        <td><span class="tag t-blue">Low</span></td>
+        <td><span class="tag" style="background:rgba(0,115,207,0.18); color:var(--blue-t);">Very High</span></td>
+        <td style="font-weight:600; color:var(--blue-t); white-space:nowrap;">Immediately</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">02</td>
+        <td><div style="font-weight:600; font-size:0.86rem;">Email Campaign Kit</div><div style="font-size:0.76rem; color:var(--muted); margin-top:2px;">Pre-built B2B templates sellers send to their existing customer list</div></td>
+        <td><span class="tag t-blue">Low</span></td>
+        <td><span class="tag t-blue">Medium-High</span></td>
+        <td>Week 1–2</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">03</td>
+        <td><div style="font-weight:600; font-size:0.86rem;">Pipeline Dashboard</div><div style="font-size:0.76rem; color:var(--muted); margin-top:2px;">Real-time deal-stage view per reseller — data already in backend</div></td>
+        <td><span class="tag t-yellow">Medium</span></td>
+        <td><span class="tag t-blue">High</span></td>
+        <td>Q2</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">04</td>
+        <td><div style="font-weight:600; font-size:0.86rem;">Live Quote Generator</div><div style="font-size:0.76rem; color:var(--muted); margin-top:2px;">30-second shareable topi quote mid-conversation, for every reseller</div></td>
+        <td><span class="tag t-red">High</span></td>
+        <td><span class="tag t-gray">Medium</span></td>
+        <td>Q2–Q3</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 18 · Feature 1: SPIFF
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-paper">
+  <span class="kicker">Feature 01 · Ships Immediately</span>
+  <div class="display" style="margin-bottom:24px;">Tiered Seller SPIFF Program</div>
+  <div class="cols-2" style="align-items:start; gap:52px;">
+    <div>
+      <table style="margin-bottom:18px;">
+        <thead><tr><th>Deal Size</th><th>Rep Bonus</th></tr></thead>
+        <tbody>
+          <tr><td>&lt; €5k</td><td style="font-weight:600; color:var(--blue-t);">€20–€50 flat</td></tr>
+          <tr><td>€5k – €20k</td><td style="font-weight:600; color:var(--blue-t);">€100–€250</td></tr>
+          <tr><td>€20k – €50k</td><td style="font-weight:600; color:var(--blue-t);">€300–€450</td></tr>
+          <tr><td>&gt; €50k</td><td style="font-weight:600; color:var(--blue-t);">€500–€1,000 + quarterly prize pool</td></tr>
+        </tbody>
+      </table>
+      <div class="pull"><strong>Why it changes behavior:</strong> Bonus goes to the rep directly — not the company. Offering topi now has a clear personal financial upside. The "why would I add steps?" objection disappears.</div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:0;">
+      <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:var(--muted); margin-bottom:6px;">Stakeholder view</div>
+      <div class="e-row">
+        <div style="flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+            <div class="e-t">Sales Rep / Channel Partner</div><span class="tag t-red">Root blocker</span>
+          </div>
+          <div class="e-d"><strong>JTBD:</strong> Make me earn more per deal without adding complexity. <strong style="color:var(--red);">Blocker:</strong> Commission tied to revenue/margin — no incentive to offer topi.</div>
+        </div>
+      </div>
+      <div class="e-row">
+        <div style="flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+            <div class="e-t">VP of Partnership</div><span class="tag t-blue">Sponsor</span>
+          </div>
+          <div class="e-d"><strong>JTBD:</strong> Hit GMV targets without adding headcount. <strong style="color:var(--red);">Blocker:</strong> Slow corporate incentive structures can't motivate individual reps at scale.</div>
+        </div>
+      </div>
+      <div class="e-row">
+        <div style="flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+            <div class="e-t">Head of Engineering</div><span class="tag t-gray">Phase 2</span>
+          </div>
+          <div class="e-d"><strong>JTBD:</strong> Prioritise eng resources on highest business impact per sprint. <strong style="color:var(--red);">Note:</strong> v1 needs zero engineering. Phase 2 dashboard reads existing CRM data.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 19 · Features 2 + 3
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-paper">
+  <span class="kicker">Features 02 + 03</span>
+  <div class="display" style="margin-bottom:28px;">Email Campaign Kit + Pipeline Dashboard</div>
+  <div class="cols-2" style="align-items:start; gap:52px;">
+    <div>
+      <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.16em; color:var(--blue-t); padding-bottom:10px; border-bottom:2px solid var(--blue); margin-bottom:16px;">Feature 02 · Email Campaign Kit · Week 1–2</div>
+      <p class="body muted" style="margin-bottom:16px;">Pre-built email templates sellers send to existing B2B customer lists. Zero creative effort from partners. Phase 2: AI-personalized campaigns using existing contract data.</p>
+      <div class="e-row">
+        <div style="flex:1;"><div class="e-t">For Reseller / Partner</div><div class="e-d"><strong>JTBD:</strong> Re-engage dormant customers without writing a single email myself. <strong style="color:var(--red);">Blocker:</strong> No bandwidth for custom campaigns. Zero brand assets from topi today.</div></div>
+      </div>
+      <div class="e-row">
+        <div style="flex:1;"><div class="e-d" style="padding-top:2px;"><strong style="color:var(--ink);">Engineering v1:</strong> Zero &nbsp;·&nbsp; Phase 2 reads existing contract data</div></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.16em; color:var(--blue-t); padding-bottom:10px; border-bottom:2px solid var(--blue); margin-bottom:16px;">Feature 03 · Pipeline Dashboard · Q2</div>
+      <p class="body muted" style="margin-bottom:16px;">Real-time view per reseller — deals in checkout, abandoned, in credit review, closed. Lets sellers follow up at exactly the right moment.</p>
+      <div class="e-row">
+        <div style="flex:1;"><div class="e-t">For Sales Rep · Product Lead</div><div class="e-d"><strong>JTBD:</strong> Tell me exactly when to follow up — show me topi isn't a black box. <strong style="color:var(--red);">Blocker:</strong> Zero visibility into deal stage after checkout. Data exists but no UI surface.</div></div>
+      </div>
+      <div class="e-row">
+        <div style="flex:1;"><div class="e-d" style="padding-top:2px;"><strong style="color:var(--ink);">Engineering:</strong> UI layer only — data already exists in backend</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 20 · Feature 4 + Stakeholders
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-paper">
+  <span class="kicker">Feature 04 + Stakeholders</span>
+  <div class="display" style="margin-bottom:24px;">Live Quote Generator + Who We Need</div>
+  <div class="cols-2" style="align-items:start; gap:52px;">
+    <div>
+      <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.16em; color:var(--blue-t); padding-bottom:10px; border-bottom:2px solid var(--blue); margin-bottom:16px;">Feature 04 · Live Quote Generator · Q2–Q3</div>
+      <p class="body muted" style="margin-bottom:14px;">Rep enters device, deal size, customer name → shareable topi financing quote in 30 seconds, mid-conversation, without leaving the sales flow.</p>
+      <div class="pull" style="margin-bottom:14px;">Currently only exists inside ITscope and SYNAXON. This brings the 30-second quote to every reseller regardless of integration tier.</div>
+      <div class="e-row" style="border-top:1px solid var(--border); padding-top:14px;">
+        <div style="flex:1;"><div class="e-t">Sales Rep (all tiers)</div><div class="e-d"><strong>JTBD:</strong> Give me a shareable quote I can show the customer in the room. <strong style="color:var(--red);">Blocker:</strong> Current flow requires leaving the sales tool. Longer = less likely.</div></div>
+      </div>
+      <div style="margin-top:12px; font-size:0.76rem; color:var(--muted);"><strong style="color:var(--ink);">Engineering:</strong> Frontend + pricing engine + credit check API hook</div>
+    </div>
+    <div>
+      <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.16em; color:var(--muted); margin-bottom:12px;">All Stakeholders — Full Map</div>
+      <div class="e-row">
+        <div style="flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;"><div class="e-t">Sales Rep / Reseller</div><span class="tag t-red">Root cause</span></div>
+          <div class="e-d">JTBD: Earn more, close faster, look good. Blocker: no incentive, no visibility, high friction.</div>
+        </div>
+      </div>
+      <div class="e-row">
+        <div style="flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;"><div class="e-t">VP of Partnership</div><span class="tag t-blue">Sponsor</span></div>
+          <div class="e-d">JTBD: Scale GMV without re-negotiating every partner contract. Blocker: slow corporate structures.</div>
+        </div>
+      </div>
+      <div class="e-row">
+        <div style="flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;"><div class="e-t">Product Lead</div><span class="tag t-blue">Enabler</span></div>
+          <div class="e-d">JTBD: Ship partner features without new data infrastructure. Blocker: eng bandwidth competes.</div>
+        </div>
+      </div>
+      <div class="e-row">
+        <div style="flex:1;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;"><div class="e-t">Head of Engineering</div><span class="tag t-gray">Phase 2</span></div>
+          <div class="e-d">JTBD: Prioritise eng on highest-impact features. Blocker: Quote generator needs pricing engine + credit check hook — scoped but significant.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 21 · Section opener — Ship It
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-blue">
+  <div class="opener-body">
+    <div class="opener-ghost">05</div>
+    <div class="opener-inner">
+      <span class="kicker">Section 05</span>
+      <div class="opener-title">Ship the SPIFF.<br>Validate in 45 days.</div>
+      <div class="opener-sub">Zero engineering for v1 · First signal week 2 · Go/no-go day 45</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 22 · Summary Table
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-dark">
+  <span class="kicker">Summary</span>
+  <div class="display" style="margin-bottom:24px;">The full picture at a glance</div>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th style="color:var(--blue-l); border-bottom-color:rgba(126,200,255,0.3);">O1: Seller Penetration</th>
+        <th>O2: Lifecycle</th>
+        <th>O3: Enterprise</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:600; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.06em; color:rgba(255,255,255,0.35);">Current</td>
+        <td style="color:white; font-weight:600;">1.5% penetration</td>
+        <td>50% buyout / 25% churn</td>
+        <td>15% close rate</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.06em; color:rgba(255,255,255,0.35);">Target</td>
+        <td style="color:var(--blue-l); font-weight:600;">3% (market avg)</td>
+        <td style="color:rgba(255,255,255,0.28);">—</td>
+        <td>30–40%</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.06em; color:rgba(255,255,255,0.35);">Time to signal</td>
+        <td style="color:var(--blue-l); font-weight:600;">2 weeks</td>
+        <td style="color:rgba(255,255,255,0.28);">36 months</td>
+        <td>3–6 months</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.06em; color:rgba(255,255,255,0.35);">Leverage</td>
+        <td style="color:white; font-weight:600;">Internal</td>
+        <td style="color:rgba(255,255,255,0.28);">External</td>
+        <td>Mixed</td>
+      </tr>
+      <tr>
+        <td style="font-weight:600; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.06em; color:rgba(255,255,255,0.35);">Priority</td>
+        <td><span style="background:var(--blue); color:white; padding:3px 12px; border-radius:3px; font-size:0.76rem; font-weight:800;">#1 · Start now</span></td>
+        <td><span style="color:rgba(255,255,255,0.22); font-size:0.82rem;">Deprioritized</span></td>
+        <td><span style="background:rgba(255,255,255,0.08); color:rgba(255,255,255,0.55); padding:3px 12px; border-radius:3px; font-size:0.76rem; font-weight:700;">#2</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="margin-top:20px; padding:14px 18px; border-left:2px solid rgba(126,200,255,0.3); font-size:0.84rem; color:rgba(255,255,255,0.55); line-height:1.65;">
+    We start with O1. We use O1's GMV growth to fund and justify O3. O2 is monitored but not actively resourced.
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 23 · The Bet + Kill Switch
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-dark">
+  <span class="kicker">The Bet + Kill Switch</span>
+  <div class="display" style="margin-bottom:28px;">We are betting hard on resellers.</div>
+  <div class="cols-2" style="gap:40px; align-items:start;">
+    <div>
+      <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:var(--blue-l); margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.08);">If we are right</div>
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div style="display:flex; gap:12px; align-items:baseline;">
+          <span style="color:var(--blue-l); font-size:0.78rem; font-weight:700; flex-shrink:0; width:14px;">✓</span>
+          <span style="font-size:0.84rem; color:rgba(255,255,255,0.75); line-height:1.65;">Day-15: new deal requests increase above baseline</span>
+        </div>
+        <div style="display:flex; gap:12px; align-items:baseline;">
+          <span style="color:var(--blue-l); font-size:0.78rem; font-weight:700; flex-shrink:0; width:14px;">✓</span>
+          <span style="font-size:0.84rem; color:rgba(255,255,255,0.75); line-height:1.65;">Day-45: sustained activation confirmed across partners</span>
+        </div>
+        <div style="display:flex; gap:12px; align-items:baseline;">
+          <span style="color:var(--blue-l); font-size:0.78rem; font-weight:700; flex-shrink:0; width:14px;">✓</span>
+          <span style="font-size:0.84rem; color:rgba(255,255,255,0.75); line-height:1.65;">Month 6: seller penetration moving toward 3%</span>
+        </div>
+        <div style="display:flex; gap:12px; align-items:baseline;">
+          <span style="color:var(--blue-l); font-size:0.78rem; font-weight:700; flex-shrink:0; width:14px;">✓</span>
+          <span style="font-size:0.84rem; color:rgba(255,255,255,0.75); line-height:1.65;">GMV growth funds O3 enterprise initiative</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:rgba(220,100,110,0.9); margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.08);">Kill switch at day 45</div>
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div style="display:flex; gap:12px; align-items:baseline;">
+          <span style="color:rgba(220,100,110,0.85); font-size:0.78rem; font-weight:700; flex-shrink:0; width:14px;">✕</span>
+          <span style="font-size:0.84rem; color:rgba(255,255,255,0.72); line-height:1.65;">&lt;10% change in reseller activation rate</span>
+        </div>
+        <div style="display:flex; gap:12px; align-items:baseline;">
+          <span style="color:rgba(220,100,110,0.85); font-size:0.78rem; font-weight:700; flex-shrink:0; width:14px;">✕</span>
+          <span style="font-size:0.84rem; color:rgba(255,255,255,0.72); line-height:1.65;">Revisit root cause — may be pre-qual friction, not incentives</span>
+        </div>
+        <div style="display:flex; gap:12px; align-items:baseline;">
+          <span style="color:rgba(220,100,110,0.85); font-size:0.78rem; font-weight:700; flex-shrink:0; width:14px;">✕</span>
+          <span style="font-size:0.84rem; color:rgba(255,255,255,0.72); line-height:1.65;">Next move: prioritize Live Quote Generator to reduce conversation friction</span>
+        </div>
+        <div style="display:flex; gap:12px; align-items:baseline;">
+          <span style="color:rgba(220,100,110,0.85); font-size:0.78rem; font-weight:700; flex-shrink:0; width:14px;">✕</span>
+          <span style="font-size:0.84rem; color:rgba(255,255,255,0.85); line-height:1.65; font-weight:600;">We do not wait 6 months to find out.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 24 · Engineering Process
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-dark">
+  <span class="kicker">Engineering Approach</span>
+  <div class="display" style="margin-bottom:24px;">How we build on top of what we have</div>
+  <div style="flex:1; display:grid; grid-template-columns:1fr 1fr; gap:0 52px; align-content:center;">
+    <div>
+      <div style="display:flex; gap:14px; padding:14px 0; border-top:1px solid rgba(255,255,255,0.07);">
+        <div style="font-size:1.8rem; font-weight:800; color:rgba(126,200,255,0.12); letter-spacing:-0.04em; line-height:1; flex-shrink:0; width:42px;">01</div>
+        <div><div style="font-size:0.86rem; font-weight:600; color:rgba(255,255,255,0.88); margin-bottom:4px;">SPIFF Automation</div><div style="font-size:0.76rem; color:rgba(255,255,255,0.44); line-height:1.65;">Data flows, automated onboarding, reminder cadence. Wire to existing CRM — no new infrastructure.</div></div>
+      </div>
+      <div style="display:flex; gap:14px; padding:14px 0; border-top:1px solid rgba(255,255,255,0.07);">
+        <div style="font-size:1.8rem; font-weight:800; color:rgba(126,200,255,0.12); letter-spacing:-0.04em; line-height:1; flex-shrink:0; width:42px;">02</div>
+        <div><div style="font-size:0.86rem; font-weight:600; color:rgba(255,255,255,0.88); margin-bottom:4px;">Pipeline Dashboard</div><div style="font-size:0.76rem; color:rgba(255,255,255,0.44); line-height:1.65;">Aggregate deal-stage events per partner ID. Surface via clean UI. Data already exists in backend.</div></div>
+      </div>
+      <div style="display:flex; gap:14px; padding:14px 0; border-top:1px solid rgba(255,255,255,0.07);">
+        <div style="font-size:1.8rem; font-weight:800; color:rgba(126,200,255,0.12); letter-spacing:-0.04em; line-height:1; flex-shrink:0; width:42px;">03</div>
+        <div><div style="font-size:0.86rem; font-weight:600; color:rgba(255,255,255,0.88); margin-bottom:4px;">Email Campaign Kit</div><div style="font-size:0.76rem; color:rgba(255,255,255,0.44); line-height:1.65;">Design + copy only for v1. Zero engineering. Phase 2: AI personalization on existing contract data.</div></div>
+      </div>
+    </div>
+    <div>
+      <div style="display:flex; gap:14px; padding:14px 0; border-top:1px solid rgba(255,255,255,0.07);">
+        <div style="font-size:1.8rem; font-weight:800; color:rgba(126,200,255,0.12); letter-spacing:-0.04em; line-height:1; flex-shrink:0; width:42px;">04</div>
+        <div><div style="font-size:0.86rem; font-weight:600; color:rgba(255,255,255,0.88); margin-bottom:4px;">Live Quote Generator</div><div style="font-size:0.76rem; color:rgba(255,255,255,0.44); line-height:1.65;">Frontend tool + pricing engine + credit check API hook. Output: shareable link or PDF. Clearly scoped.</div></div>
+      </div>
+      <div style="display:flex; gap:14px; padding:14px 0; border-top:1px solid rgba(255,255,255,0.07);">
+        <div style="font-size:1.8rem; font-weight:800; color:rgba(126,200,255,0.07); letter-spacing:-0.04em; line-height:1; flex-shrink:0; width:42px;">→</div>
+        <div><div style="font-size:0.86rem; font-weight:600; color:rgba(255,255,255,0.88); margin-bottom:4px;">For each component</div><div style="font-size:0.76rem; color:rgba(255,255,255,0.44); line-height:1.65;">Frontend scope · Backend scope · Integrations · Analytics setup · User impact · Technical connections.</div></div>
+      </div>
+      <div style="display:flex; gap:14px; padding:14px 0; border-top:1px solid rgba(255,255,255,0.07);">
+        <div style="font-size:1.8rem; font-weight:800; color:rgba(126,200,255,0.07); letter-spacing:-0.04em; line-height:1; flex-shrink:0; width:42px;">∞</div>
+        <div><div style="font-size:0.86rem; font-weight:600; color:rgba(255,255,255,0.88); margin-bottom:4px;">Shared infrastructure</div><div style="font-size:0.76rem; color:rgba(255,255,255,0.44); line-height:1.65;">Partner Auth · Deal Event Bus · Notification Service · Partner Data Store · Analytics — built once, used by all four.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 25 · Q&A — Three Questions
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-white">
+  <span class="kicker">Case Study Questions</span>
+  <div class="display" style="margin-bottom:28px;">Three questions. Three honest answers.</div>
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:0; max-width:780px;">
+    <div style="padding:20px 0; border-bottom:1px solid var(--border);">
+      <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:var(--blue-t); margin-bottom:8px;">Question 01</div>
+      <div style="font-size:0.94rem; font-weight:700; color:var(--ink); margin-bottom:8px;">Why do sellers avoid topi today?</div>
+      <p style="font-size:0.86rem; color:var(--muted); line-height:1.72;">Because we do not incentivize them to hand us the market demand. Their commission is tied to revenue and margin — not payment method. Offering topi adds steps with no financial upside for the rep. The SPIFF program directly addresses this.</p>
+    </div>
+    <div style="padding:20px 0; border-bottom:1px solid var(--border);">
+      <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:var(--blue-t); margin-bottom:8px;">Question 02</div>
+      <div style="font-size:0.94rem; font-weight:700; color:var(--ink); margin-bottom:8px;">Which seller cohorts underperform?</div>
+      <p style="font-size:0.86rem; color:var(--muted); line-height:1.72;">We expect smaller resellers outside SYNAXON/ITscope networks and reps without prior financing experience. Post-SPIFF launch, we validate this with data segmented by partner size and rep tenure. The partner performance gap confirms the hypothesis is behavioral.</p>
+    </div>
+    <div style="padding:20px 0;">
+      <div style="font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:var(--blue-t); margin-bottom:8px;">Question 03</div>
+      <div style="font-size:0.94rem; font-weight:700; color:var(--ink); margin-bottom:8px;">What % of financed quotes convert?</div>
+      <p style="font-size:0.86rem; color:var(--muted); line-height:1.72;">We will establish a pre-SPIFF baseline and measure the lift at day 15, day 45, and month 6. Quote attachment rate is the leading indicator. Financed GMV is the lagging one. Both are tracked from week 1.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────────────────────────────────────────────
+     SLIDE 26 · Closing
+──────────────────────────────────────────────────────────── -->
+<div class="slide s-dark" style="padding:0; overflow:hidden;">
+  <div style="display:flex; flex-direction:column; justify-content:space-between; height:100%; padding:64px 80px;">
+    <div>
+      <span style="font-size:8px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.28);">topi · Senior PM · May 2026</span>
+    </div>
+    <div>
+      <div style="font-size:clamp(2rem,4.8vw,3.8rem); font-weight:800; color:white; letter-spacing:-0.028em; line-height:1.1; margin-bottom:20px; max-width:700px;">The demand is there.<br>We just need to <span style="color:var(--blue);">take it.</span></div>
+      <div style="font-size:0.92rem; color:rgba(255,255,255,0.45); max-width:500px; line-height:1.75; margin-bottom:0;">The 3% market average proves demand exists. It is an activation problem, not a demand problem. We start with O1, validate in 45 days, and use the signal to fund O3.</div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.1); padding-top:24px; display:flex; justify-content:space-between; align-items:flex-end;">
       <div>
-        <div style="font-size:0.68rem; text-transform:uppercase; letter-spacing:0.07em; color:var(--blue-text); font-weight:700; margin-bottom:10px; padding-bottom:6px; border-bottom:2px solid var(--blue);">Feature 02 · Email Campaign Kit · Week 1–2</div>
-        <div class="card" style="margin-bottom:8px;">
-          <h3 style="margin-bottom:4px;">What it is</h3>
-          <p class="sm muted">Pre-built email templates sellers send to existing B2B customer lists. Zero creative effort from partners. Phase 2: AI-personalized campaigns using existing contract data.</p>
-        </div>
-        <div class="card" style="border-left:3px solid var(--blue); margin-bottom:8px;">
-          <div style="font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--blue-text); margin-bottom:5px;">Reseller / Partner</div>
-          <div style="font-size:0.78rem; margin-bottom:3px;"><strong>JTBD:</strong> <span style="color:var(--muted);">Re-engage my dormant customers without writing a single email myself.</span></div>
-          <div style="font-size:0.78rem; color:var(--red);"><strong>Blocker:</strong> No bandwidth for custom campaigns. Zero brand assets or copy from topi today.</div>
-        </div>
-        <div style="padding:8px 12px; background:var(--surface); border-radius:8px; font-size:0.76rem; color:var(--muted);">
-          <strong style="color:var(--ink);">Engineering v1:</strong> Zero &nbsp;·&nbsp; Phase 2 reads existing contract data
-        </div>
+        <div style="font-size:1.8rem; font-weight:800; color:white; letter-spacing:-0.022em;">Ahmed Sulaiman</div>
+        <div style="font-size:0.84rem; color:rgba(255,255,255,0.45); margin-top:4px;">Senior Product Manager · Berlin</div>
       </div>
-      <!-- Feature 03 -->
-      <div>
-        <div style="font-size:0.68rem; text-transform:uppercase; letter-spacing:0.07em; color:var(--blue-text); font-weight:700; margin-bottom:10px; padding-bottom:6px; border-bottom:2px solid var(--blue);">Feature 03 · Pipeline Dashboard · Q2</div>
-        <div class="card" style="margin-bottom:8px;">
-          <h3 style="margin-bottom:4px;">What it is</h3>
-          <p class="sm muted">Real-time view per reseller — deals in checkout, abandoned, in credit review, closed. Lets sellers follow up at exactly the right moment.</p>
-        </div>
-        <div class="card" style="border-left:3px solid var(--blue); margin-bottom:8px;">
-          <div style="font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--blue-text); margin-bottom:5px;">Sales Rep · Product Lead</div>
-          <div style="font-size:0.78rem; margin-bottom:3px;"><strong>JTBD:</strong> <span style="color:var(--muted);">Tell me exactly when to follow up — and show me topi isn't a black box.</span></div>
-          <div style="font-size:0.78rem; color:var(--red);"><strong>Blocker:</strong> Zero visibility into deal stage after checkout. topi currently disappears post-quote. Data exists in backend but no UI surface.</div>
-        </div>
-        <div style="padding:8px 12px; background:var(--surface); border-radius:8px; font-size:0.76rem; color:var(--muted);">
-          <strong style="color:var(--ink);">Engineering:</strong> UI layer only — data already exists in backend
-        </div>
+      <div style="text-align:right;">
+        <div style="font-size:0.78rem; color:rgba(255,255,255,0.28); line-height:1.6;">Questions welcome</div>
       </div>
     </div>
   </div>
-
-  <!-- ── SLIDE 20 · Feature 4 + Stakeholders ──────────────── -->
-  <div class="slide light">
-    <div class="eyebrow">Feature 04 + Stakeholders</div>
-    <h2>Live Quote Generator + Who We Need</h2>
-    <div class="cols-2" style="gap:24px;">
-      <div>
-        <div style="font-size:0.68rem; text-transform:uppercase; letter-spacing:0.07em; color:var(--blue-text); font-weight:700; margin-bottom:10px; padding-bottom:6px; border-bottom:2px solid var(--blue);">Feature 04 · Live Quote Generator · Q2–Q3</div>
-        <div class="card" style="margin-bottom:8px;">
-          <h3 style="margin-bottom:4px;">What it is</h3>
-          <p class="sm muted">Rep enters device, deal size, customer name → shareable topi financing quote in 30 seconds, mid-conversation, without leaving the sales flow.</p>
-        </div>
-        <div class="card" style="margin-bottom:8px;">
-          <h3 style="margin-bottom:4px;">Current gap</h3>
-          <p class="sm muted">Only exists inside ITscope and SYNAXON. This brings the 30-second quote to every reseller, regardless of integration tier — directly addressing the "longer sales conversations" blocker.</p>
-        </div>
-        <div class="card" style="border-left:3px solid var(--blue); margin-bottom:8px;">
-          <div style="font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--blue-text); margin-bottom:5px;">Sales Rep (all tiers)</div>
-          <div style="font-size:0.78rem; margin-bottom:3px;"><strong>JTBD:</strong> <span style="color:var(--muted);">Give me a shareable quote I can show the customer in the room — no tabs, no waiting.</span></div>
-          <div style="font-size:0.78rem; color:var(--red);"><strong>Blocker:</strong> Current quote flow requires leaving the sales tool. Longer conversation = lower likelihood of offering topi at all.</div>
-        </div>
-        <div style="padding:8px 12px; background:var(--surface); border-radius:8px; font-size:0.76rem; color:var(--muted);">
-          <strong style="color:var(--ink);">Engineering:</strong> Frontend + pricing engine + credit check API hook
-        </div>
-      </div>
-      <div>
-        <div style="font-size:0.68rem; text-transform:uppercase; letter-spacing:0.07em; color:var(--blue-text); font-weight:700; margin-bottom:10px;">All Stakeholders — Full Map</div>
-        <div class="card" style="border-left:3px solid var(--blue); margin-bottom:7px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-            <div style="font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--blue-text);">Sales Rep / Reseller</div>
-            <span class="tag t-red">Root cause</span>
-          </div>
-          <div style="font-size:0.78rem; margin-bottom:2px;"><strong>JTBD:</strong> <span style="color:var(--muted);">Earn more, close faster, look good to the customer.</span></div>
-          <div style="font-size:0.75rem; color:var(--red);">Blocker: no incentive, no visibility, high friction mid-conversation.</div>
-        </div>
-        <div class="card" style="border-left:3px solid rgba(0,115,207,0.45); margin-bottom:7px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-            <div style="font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--blue-text);">VP of Partnership</div>
-            <span class="tag t-blue">Sponsor</span>
-          </div>
-          <div style="font-size:0.78rem; margin-bottom:2px;"><strong>JTBD:</strong> <span style="color:var(--muted);">Scale GMV without re-negotiating every partner contract.</span></div>
-          <div style="font-size:0.75rem; color:var(--red);">Blocker: slow corporate structures, can't motivate reps at rep level.</div>
-        </div>
-        <div class="card" style="border-left:3px solid rgba(0,115,207,0.45); margin-bottom:7px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-            <div style="font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--blue-text);">Product Lead</div>
-            <span class="tag t-blue">Enabler</span>
-          </div>
-          <div style="font-size:0.78rem; margin-bottom:2px;"><strong>JTBD:</strong> <span style="color:var(--muted);">Ship partner-facing features without building new data infrastructure.</span></div>
-          <div style="font-size:0.75rem; color:var(--red);">Blocker: Feature roadmap competes for eng bandwidth. v1 needs to be zero-eng.</div>
-        </div>
-        <div class="card" style="border-left:3px solid rgba(0,115,207,0.45);">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-            <div style="font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--blue-text);">Head of Engineering</div>
-            <span class="tag t-neutral">Phase 2</span>
-          </div>
-          <div style="font-size:0.78rem; margin-bottom:2px;"><strong>JTBD:</strong> <span style="color:var(--muted);">Prioritise eng work on highest-impact features per sprint.</span></div>
-          <div style="font-size:0.75rem; color:var(--red);">Blocker: Quote generator needs pricing engine + credit check hook — significant but scoped.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── SLIDE 21 · Ship It (transition) ──────────────────── -->
-  <div class="slide tr-green">
-    <div class="tr-center">
-      <div class="eyebrow">Section 05</div>
-      <div class="tr-title">Ship the SPIFF.<br>Validate in 45 days.</div>
-      <div class="tr-tag">Zero engineering for v1 · First signal week 2 · Go/no-go day 45</div>
-    </div>
-  </div>
-
-  <!-- ── SLIDE 22 · Summary Table ─────────────────────────── -->
-  <div class="slide dark">
-    <div class="eyebrow">Summary</div>
-    <h2>The full picture at a glance</h2>
-    <table>
-      <thead>
-        <tr>
-          <th></th>
-          <th style="color:var(--blue); background:rgba(0,115,207,0.08);">O1: Seller Penetration</th>
-          <th>O2: Lifecycle</th>
-          <th>O3: Enterprise</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="font-weight:600; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.4);">Current</td>
-          <td style="color:white; font-weight:600;">1.5% penetration</td>
-          <td>50% buyout / 25% churn</td>
-          <td>15% close rate</td>
-        </tr>
-        <tr>
-          <td style="font-weight:600; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.4);">Target</td>
-          <td style="color:var(--blue); font-weight:600;">3% (market avg)</td>
-          <td style="color:rgba(255,255,255,0.3);">—</td>
-          <td>30–40%</td>
-        </tr>
-        <tr>
-          <td style="font-weight:600; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.4);">Time to signal</td>
-          <td style="color:var(--blue); font-weight:600;">2 weeks</td>
-          <td style="color:rgba(255,255,255,0.3);">36 months</td>
-          <td>3–6 months</td>
-        </tr>
-        <tr>
-          <td style="font-weight:600; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.4);">Leverage</td>
-          <td style="color:white; font-weight:600;">Internal</td>
-          <td style="color:rgba(255,255,255,0.3);">External</td>
-          <td>Mixed</td>
-        </tr>
-        <tr>
-          <td style="font-weight:600; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.04em; color:rgba(255,255,255,0.4);">Priority</td>
-          <td><span style="background:var(--blue); color:var(--dark); padding:3px 12px; border-radius:20px; font-size:0.78rem; font-weight:800;">#1 · Start now</span></td>
-          <td><span style="color:rgba(255,255,255,0.25); font-size:0.83rem;">Deprioritized</span></td>
-          <td><span style="background:rgba(255,255,255,0.1); color:rgba(255,255,255,0.6); padding:3px 12px; border-radius:20px; font-size:0.78rem; font-weight:700;">#2</span></td>
-        </tr>
-      </tbody>
-    </table>
-    <div style="margin-top:20px; padding:14px 18px; background:rgba(0,115,207,0.07); border:1px solid rgba(0,115,207,0.15); border-radius:10px; font-size:0.85rem; color:rgba(255,255,255,0.7);">
-      We start with O1. We use O1's GMV growth to fund and justify O3. O2 is monitored but not actively resourced.
-    </div>
-  </div>
-
-  <!-- ── SLIDE 23 · The Bet ────────────────────────────────── -->
-  <div class="slide dark">
-    <div class="eyebrow">The Bet + Kill Switch</div>
-    <h2>We are betting hard on resellers.</h2>
-    <div class="cols-2" style="gap:20px;">
-      <div style="background:rgba(0,115,207,0.07); border:1px solid rgba(0,115,207,0.18); border-radius:12px; padding:20px 24px;">
-        <div style="font-size:0.68rem; text-transform:uppercase; letter-spacing:0.09em; color:var(--blue-light); font-weight:600; margin-bottom:14px;">If we are right</div>
-        <div style="display:flex; flex-direction:column; gap:11px;">
-          <div style="display:flex; gap:10px; align-items:baseline;">
-            <span style="color:var(--blue-light); font-size:0.8rem; font-weight:700; flex-shrink:0;">✓</span>
-            <span style="font-size:0.84rem; color:rgba(255,255,255,0.78); line-height:1.5;">Day-15: new deal requests increase above baseline</span>
-          </div>
-          <div style="display:flex; gap:10px; align-items:baseline;">
-            <span style="color:var(--blue-light); font-size:0.8rem; font-weight:700; flex-shrink:0;">✓</span>
-            <span style="font-size:0.84rem; color:rgba(255,255,255,0.78); line-height:1.5;">Day-45: sustained activation confirmed across partners</span>
-          </div>
-          <div style="display:flex; gap:10px; align-items:baseline;">
-            <span style="color:var(--blue-light); font-size:0.8rem; font-weight:700; flex-shrink:0;">✓</span>
-            <span style="font-size:0.84rem; color:rgba(255,255,255,0.78); line-height:1.5;">Month 6: seller penetration moving toward 3%</span>
-          </div>
-          <div style="display:flex; gap:10px; align-items:baseline;">
-            <span style="color:var(--blue-light); font-size:0.8rem; font-weight:700; flex-shrink:0;">✓</span>
-            <span style="font-size:0.84rem; color:rgba(255,255,255,0.78); line-height:1.5;">GMV growth funds O3 enterprise initiative</span>
-          </div>
-        </div>
-      </div>
-      <div style="background:rgba(255,31,57,0.05); border:1px solid rgba(255,31,57,0.18); border-radius:12px; padding:20px 24px;">
-        <div style="font-size:0.68rem; text-transform:uppercase; letter-spacing:0.09em; color:rgba(255,100,115,0.9); font-weight:600; margin-bottom:14px;">Kill switch at day 45</div>
-        <div style="display:flex; flex-direction:column; gap:11px;">
-          <div style="display:flex; gap:10px; align-items:baseline;">
-            <span style="color:rgba(255,100,115,0.85); font-size:0.8rem; font-weight:700; flex-shrink:0;">✕</span>
-            <span style="font-size:0.84rem; color:rgba(255,255,255,0.78); line-height:1.5;">&lt;10% change in reseller activation rate</span>
-          </div>
-          <div style="display:flex; gap:10px; align-items:baseline;">
-            <span style="color:rgba(255,100,115,0.85); font-size:0.8rem; font-weight:700; flex-shrink:0;">✕</span>
-            <span style="font-size:0.84rem; color:rgba(255,255,255,0.78); line-height:1.5;">Revisit root cause — may be pre-qual friction, not incentives</span>
-          </div>
-          <div style="display:flex; gap:10px; align-items:baseline;">
-            <span style="color:rgba(255,100,115,0.85); font-size:0.8rem; font-weight:700; flex-shrink:0;">✕</span>
-            <span style="font-size:0.84rem; color:rgba(255,255,255,0.78); line-height:1.5;">Next move: prioritize Live Quote Generator to reduce conversation friction</span>
-          </div>
-          <div style="display:flex; gap:10px; align-items:baseline;">
-            <span style="color:rgba(255,100,115,0.85); font-size:0.8rem; font-weight:700; flex-shrink:0;">✕</span>
-            <span style="font-size:0.84rem; color:rgba(255,255,255,0.88); line-height:1.5; font-weight:600;">We do not wait 6 months to find out.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── SLIDE 24 · Process Cards ─────────────────────────── -->
-  <div class="slide dark">
-    <div class="eyebrow">Engineering Approach</div>
-    <h2>How we build on top of what we have</h2>
-    <div style="flex:1; display:grid; grid-template-columns:1fr 1fr; gap:0 56px; align-content:center;">
-      <div>
-        <div class="process-card"><h3>01 · SPIFF Automation</h3><p>Data flows, automated onboarding, reminder cadence. Wire to existing CRM — no new infrastructure.</p></div>
-        <div class="process-card"><h3>02 · Pipeline Dashboard</h3><p>Aggregate deal-stage events per partner ID. Surface via clean UI. Data already exists in backend.</p></div>
-        <div class="process-card"><h3>03 · Email Campaign Kit</h3><p>Design + copy only for v1. Zero engineering. Phase 2: AI personalization on existing contract data.</p></div>
-      </div>
-      <div>
-        <div class="process-card"><h3>04 · Live Quote Generator</h3><p>Frontend tool + pricing engine + credit check API hook. Output: shareable link or PDF. Clearly scoped.</p></div>
-        <div class="process-card"><h3>For each component</h3><p>Frontend scope · Backend scope · Integrations · Analytics setup · User impact · Technical connections.</p></div>
-        <div class="process-card"><h3>Shared infrastructure</h3><p>Partner Auth · Deal Event Bus · Notification Service · Partner Data Store · Analytics — built once, used by all four.</p></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── SLIDE 25 · Questions Answered ────────────────────── -->
-  <div class="slide white">
-    <div class="eyebrow">Case Study Questions</div>
-    <h2>Three questions. Three honest answers.</h2>
-    <div class="steps" style="max-width:760px;">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div>
-          <div class="step-title">Why do sellers avoid topi today?</div>
-          <div class="step-body">Because we do not incentivize them to hand us the market demand. Their commission is tied to revenue and margin — not payment method. Offering topi adds steps with no financial upside for the rep. The SPIFF program directly addresses this.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div>
-          <div class="step-title">Which seller cohorts underperform?</div>
-          <div class="step-body">We expect smaller resellers outside SYNAXON/ITscope networks and reps without prior financing experience. Post-SPIFF launch, we validate this with data segmented by partner size and rep tenure. The partner performance gap confirms the hypothesis is behavioral.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div>
-          <div class="step-title">What % of financed quotes convert?</div>
-          <div class="step-body">We will establish a pre-SPIFF baseline and measure the lift at day 15, day 45, and month 6. Quote attachment rate is the leading indicator. Financed GMV is the lagging one. Both are tracked from week 1.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── SLIDE 26 · Closing ────────────────────────────────── -->
-  <div class="slide cover">
-    <div class="cover-badge">topi · Senior PM · May 2026</div>
-    <div class="closing">
-      <div style="font-size:clamp(2rem,4.5vw,3.4rem); font-weight:800; color:white; letter-spacing:-0.025em; line-height:1.1; margin-bottom:20px;">The demand is there.<br>We just need to take it.</div>
-      <div style="margin-bottom:12px; font-size:0.95rem; color:rgba(255,255,255,0.5); max-width:500px; line-height:1.7;">The 3% market average proves demand exists. It is an activation problem, not a demand problem. We start with O1, validate in 45 days, and use the signal to fund O3.</div>
-      <div class="divider"></div>
-      <div class="closing-name">Ahmed Sulaiman</div>
-      <div class="closing-role">Senior Product Manager · Berlin</div>
-    </div>
-  </div>
+</div>
 
 </div><!-- /deck -->
 
@@ -1193,7 +1194,7 @@
     slides.forEach((el, i) => {
       const idx = i + 1;
       el.classList.remove('active', 'past');
-      if (idx < n)       el.classList.add('past');
+      if (idx < n)        el.classList.add('past');
       else if (idx === n) el.classList.add('active');
     });
     current = n;
@@ -1232,19 +1233,17 @@
     document.getElementById('next-btn').disabled = current === TOTAL;
   }
 
-  // Keyboard
   document.addEventListener('keydown', e => {
-    if      (e.key === 'ArrowRight' || e.key === 'ArrowDown'  || e.key === ' ') { e.preventDefault(); next(); }
-    else if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); prev(); }
-    else if (e.key === 'Home')  { e.preventDefault(); goTo(1); }
-    else if (e.key === 'End')   { e.preventDefault(); goTo(TOTAL); }
+    if      (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                   { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') { e.preventDefault(); goTo(1); }
+    else if (e.key === 'End')  { e.preventDefault(); goTo(TOTAL); }
     else if (e.key === 'f' || e.key === 'F') {
       if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
       else document.exitFullscreen?.();
     }
   });
 
-  // Click zones
   document.getElementById('deck').addEventListener('click', e => {
     if (e.target.closest('a, button, .nav-btn')) return;
     const x = e.clientX / window.innerWidth;
@@ -1252,7 +1251,6 @@
     else if (x > 0.45) next();
   });
 
-  // Swipe
   let touchStart = null;
   document.addEventListener('touchstart', e => {
     touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
