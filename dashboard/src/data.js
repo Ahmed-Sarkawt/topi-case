@@ -1,0 +1,391 @@
+export const CHALLENGES = [
+  {
+    id: 'penetration',
+    title: 'Seller Penetration',
+    metric: '1.5%',
+    benchmark: '3.0%',
+    gap: '2× below industry avg',
+    color: 'orange',
+    icon: '📡',
+    summary: 'Sellers have Topi integrated at checkout but only offer it on 1.5% of B2B deals — half the industry average. The technology is present; the human activation layer is missing.',
+    rootCauses: [
+      'Sales rep incentive misalignment — financing adds steps with no commission uplift',
+      'Rep confidence gap — financing perceived as complex; reps fear objections',
+      'No in-moment triggers — checkout is too late; conversation must happen at quote stage',
+      'Customer awareness gap — buyers arrive anchored to purchase mindset',
+    ],
+    analogy: 'Klarna solved the same problem with merchant SPIFFs. Mondu saw 1-in-3 orders shift to BNPL in 2 weeks via proactive communication — not passive availability.',
+    initiatives: [
+      { name: 'Seller SPIFF Program', ice: 576, effort: 'Low', q: 'Q1', type: 'Commercial' },
+      { name: 'Customer Awareness Enablement', ice: 392, effort: 'Low', q: 'Q1', type: 'Marketing' },
+      { name: 'Deal Assistant Tool (Calculator)', ice: 336, effort: 'Medium', q: 'Q2', type: 'Product' },
+      { name: 'Pre-Qualification Engine', ice: 216, effort: 'High', q: 'Q3', type: 'Engineering' },
+    ],
+  },
+  {
+    id: 'retention',
+    title: 'Retention & Lifecycle',
+    metric: '25%',
+    benchmark: '80–90%',
+    gap: '75% lost at contract end',
+    color: 'red',
+    icon: '🔄',
+    summary: 'Only 25% upgrade. 50% purchase outright. 25% return and disappear. The 50% buyout rate is the most diagnostic signal — customers are using Topi as a financing bridge, not a lifecycle partner.',
+    rootCauses: [
+      '50% buyout = Topi solved a "defer payment" job, not a "perpetual tech access" job',
+      'No proactive renewal outreach — customers lapse by inertia',
+      "No in-life value communication — customers forget the subscription's ongoing value",
+      'Zero churn data — no exit interviews to understand the 25% who leave',
+    ],
+    analogy: 'Dell & HP DaaS make upgrade the default path — customers opt out, not in. FINN (car subscription) contacts customers 6 weeks before contract end and waives the pickup fee.',
+    initiatives: [
+      { name: 'Proactive Renewal Journey (T-90/60/30)', ice: 504, effort: 'Medium', q: 'Q1', type: 'Product' },
+      { name: 'Exit Interview + Churn Model', ice: 448, effort: 'Low', q: 'Q1', type: 'Research' },
+      { name: 'Lifecycle Value Communication', ice: 432, effort: 'Low', q: 'Q1', type: 'Marketing' },
+      { name: 'Hardware Refresh Offer', ice: 336, effort: 'Medium', q: 'Q2', type: 'Commercial' },
+    ],
+  },
+  {
+    id: 'largedeals',
+    title: 'Large Value Deals',
+    metric: '15%',
+    benchmark: '30–40%',
+    gap: 'Close rate on >€50k deals',
+    color: 'blue',
+    icon: '🏢',
+    summary: 'Even at price parity, Topi wins only 15% of deals above €50k. Price is not the problem. Trust, procurement complexity, and multi-stakeholder buying are.',
+    rootCauses: [
+      'Trust gap — €50k+ to a 4-year-old fintech startup is a career risk for procurement teams',
+      'CFO now approves 79% of B2B purchases — multi-stakeholder selling required',
+      'Missing enterprise documentation — no standard GDPR DPA, IFRS 16 analysis, or SOC2',
+      'No reference architecture — "who else like us has done this?" goes unanswered',
+    ],
+    analogy: 'PEAC acquisition is the single most important unlock — "Is Topi stable?" is answered by a $6B asset finance institution. This card can be played immediately with no product changes.',
+    initiatives: [
+      { name: 'Enterprise Deal Package', ice: 504, effort: 'Medium', q: 'Q1', type: 'Sales' },
+      { name: 'IFRS 16 Positioning Tool', ice: 432, effort: 'Low', q: 'Q1', type: 'Finance' },
+      { name: 'Champion Development Training', ice: 392, effort: 'Low', q: 'Q1', type: 'Enablement' },
+      { name: 'PEAC Co-Selling Motion', ice: 270, effort: 'Medium', q: 'Q2', type: 'Business Dev' },
+    ],
+  },
+];
+
+export const COMPANY = {
+  name: 'topi GmbH',
+  founded: 'Sep 2021 (as Crimson GmbH)',
+  hq: 'Berlin, Germany',
+  status: 'Wholly-owned subsidiary of PEAC Solutions (Aug 2025)',
+  mission: 'Become the default operating system for B2B hardware procurement',
+  model: 'B2B2B — API-embedded hardware financing at IT reseller checkout',
+  markets: ['Germany', 'Austria', 'Netherlands', 'Belgium', 'UK (Feb 2026)'],
+  employees: '143 (LinkedIn, May 2026)',
+  ceo: 'Charlotte Pallua (Apple hardware subscription strategy, Harvard MBA)',
+};
+
+export const FUNDING = [
+  { date: 'Dec 2021', round: 'Pre-seed', amount: '$4.5M', investors: 'Index Ventures, Creandum + Angels (HelloFresh, N26, Adyen founders)', note: '' },
+  { date: 'Aug 2022', round: 'Series A', amount: '$45M ($15M equity + $30M debt)', investors: 'Index Ventures, Creandum, TriplePoint Capital', note: 'Public launch with Gravis' },
+  { date: 'Jul 2024', round: 'Debt Facility', amount: '€50M', investors: 'Macquarie Bank Europe (co-owns SPV)', note: '"20× revenue growth" cited' },
+  { date: 'Aug 2025', round: 'ACQUISITION', amount: 'Undisclosed', investors: 'PEAC Solutions (HPS/BlackRock)', note: 'All prior investors exited. Co-founder Merle removed as MD.' },
+];
+
+export const PARTNERS = [
+  { name: 'Cyberport', type: 'Retailer', country: 'DE', note: '"Cyberport Abo Business" branded' },
+  { name: 'Conrad Electronic', type: 'Retailer', country: 'DE', note: 'B2B rental integrated' },
+  { name: 'OFFICE Partner', type: 'Retailer', country: 'DE', note: 'Full topi integration' },
+  { name: 'Coolblue', type: 'Retailer', country: 'NL/BE', note: 'Major e-commerce player' },
+  { name: 'MediaMarkt Österreich', type: 'Retailer', country: 'AT', note: '' },
+  { name: 'Bechtle', type: 'IT Reseller', country: 'DE', note: "Germany's largest IT reseller" },
+  { name: 'SYNAXON', type: 'Network', country: 'DE', note: '3,200 IT reseller partners, €1B+ purchasing volume' },
+  { name: 'Michael AG', type: 'Distributor', country: 'DE', note: 'ERP-integrated, launched Sep 2024' },
+  { name: 'ITscope', type: 'Platform', country: 'DE', note: 'B2B IT procurement platform, launched Feb 2025' },
+  { name: 'Lenovo', type: 'OEM', country: 'Global', note: 'Official LGFS funding partner (EU + UK)' },
+  { name: 'Gravis ⚠️', type: 'Retailer (DEFUNCT)', country: 'DE', note: 'Launch partner — filed insolvency Mar 2024. 43 stores closed.' },
+];
+
+export const PRICING = [
+  { device: 'iPhone 17 (256GB)', monthly: '€21.49', term: '36 months', total: '€773.64', rrp: '~€899' },
+  { device: 'MacBook Air M4 (256GB)', monthly: '€22.99', term: '36 months', total: '€827.64', rrp: '~€1,099' },
+  { device: 'Galaxy Tab S9FE+ (128GB)', monthly: '€16.99', term: '36 months', total: '€611.64', rrp: '~€649' },
+  { device: 'iPhone 17 Pro (256GB)', monthly: '€34.99', term: '36 months', total: '€1,259.64', rrp: '€1,299' },
+  { device: 'MacBook Pro 14"', monthly: '€41.49', term: '36 months', total: '€1,493.64', rrp: '€1,799' },
+  { device: 'iPad Pro 11"', monthly: '€26.49', term: '36 months', total: '€953.64', rrp: '€1,099' },
+];
+
+export const COMPETITORS = [
+  {
+    tier: 1,
+    tierLabel: 'Direct Twins',
+    name: 'Flexvelop',
+    hq: 'Hamburg, DE',
+    model: 'White-label B2B equipment financing',
+    funding: '€44M',
+    scale: '€40M+ portfolio',
+    threat: 'HIGH',
+    notes: 'Structural twin to Topi. Multi-vertical (IT, hospitality, medical). Most likely to contest same reseller relationships.',
+  },
+  {
+    tier: 2,
+    tierLabel: 'Adjacent Operators',
+    name: 'Everphone',
+    hq: 'Berlin, DE',
+    model: 'Direct enterprise mobile DaaS',
+    funding: '€270M',
+    scale: '€96M ARR, 250K devices',
+    threat: 'MEDIUM',
+    notes: 'Samsung official DaaS partner. Enterprise-direct model (bypasses resellers). Expanding to full IT fleet.',
+  },
+  {
+    tier: 2,
+    tierLabel: 'Adjacent Operators',
+    name: 'Lendis',
+    hq: 'Berlin, DE',
+    model: 'Direct B2B DaaS (IT + furniture)',
+    funding: '€80M',
+    scale: '~$20M ARR, 1,000+ companies',
+    threat: 'MEDIUM',
+    notes: 'Channel displacement risk — SMBs who choose Lendis bypass resellers entirely.',
+  },
+  {
+    tier: 2,
+    tierLabel: 'Adjacent Operators',
+    name: 'Grover',
+    hq: 'Berlin, DE',
+    model: 'B2C-first tech rental, growing B2B',
+    funding: '$2.35B',
+    scale: 'B2B 5× growth YoY',
+    threat: 'HIGH',
+    notes: 'Biggest growing brand threat. B2B Premium dashboard in development. 8 EU retail chains. If they add ERP integration and approval workflows, direct SME threat.',
+  },
+  {
+    tier: 3,
+    tierLabel: 'Incumbent Lessors',
+    name: 'Grenke AG',
+    hq: 'Baden-Baden, DE',
+    model: 'Small-ticket equipment leasing via resellers',
+    funding: 'Public (MDAX)',
+    scale: '€3.05B new business 2024, 39,400 resellers',
+    threat: 'CRITICAL',
+    notes: 'If Grenke adds subscription logic to its existing leasing product, it has 1,000× Topi\'s reseller distribution. The sleeping giant.',
+  },
+  {
+    tier: 4,
+    tierLabel: 'OEM Programs',
+    name: 'HP Device as a Service',
+    hq: 'US / EU',
+    model: 'OEM-direct hardware subscription',
+    funding: 'HP Inc. (public)',
+    scale: 'Gartner IDC Leader 2025',
+    threat: 'MEDIUM',
+    notes: 'HP-only hardware. Mostly enterprise-direct. Topi partnership angle: OEMs need channel partners to reach SMEs.',
+  },
+];
+
+export const MARKET_NUMBERS = [
+  { label: 'Global HaaS (2025)', value: '$120.5B', sub: '→ $525.7B by 2031 (27.82% CAGR)' },
+  { label: 'Germany IT Leasing', value: '$29.2B', sub: '15.7% CAGR — Topi\'s core market' },
+  { label: 'European IT Spend (2026)', value: '$1.4T', sub: '+11.1% YoY (Gartner)' },
+  { label: 'Germany Embedded Finance', value: '$44.3B', sub: 'Opportunity through 2030' },
+  { label: 'CFO Approval Threshold', value: '79%', sub: 'of B2B purchases now require CFO sign-off' },
+  { label: 'AI PC Devices Needing Refresh', value: '1.7B', sub: 'Largest upgrade wave in a decade' },
+  { label: 'DaaS Adoption Rate', value: '48%', sub: 'of companies adopted HaaS to reduce CapEx' },
+  { label: 'B2B Embedded Finance (2030)', value: '$15.6T', sub: 'From $4.1T today — 4× in 5 years' },
+];
+
+export const TRENDS = [
+  {
+    title: 'AI PC Upgrade Supercycle',
+    icon: '🤖',
+    urgency: 'Now',
+    detail: '~1.7B devices need replacement (Windows 10 EOL Oct 2025, AI NPU requirements). AI PCs cost €1,500–2,500 — the financing argument gets stronger as prices rise. 2026 risk: PC volume down 5–11% from memory inflation, but higher unit prices may maintain GMV.',
+    implication: 'Lead with affordability: €2,000 AI PC at €56/month is the pitch. Volume headwinds make monthly payment frames more compelling, not less.',
+  },
+  {
+    title: 'CFO Now Controls Hardware Spend',
+    icon: '💼',
+    urgency: 'Now',
+    detail: 'Post-pandemic, CFO approval thresholds dropped from ~$500K to ~$50K. 79% of B2B purchases now require CFO approval. Average enterprise tech buying team: 33 people for large purchases.',
+    implication: 'This is exactly why large deals fail. Topi\'s reseller-led SMB motion breaks at the CFO approval layer. The IFRS 16 analysis and PEAC credibility are CFO-specific tools.',
+  },
+  {
+    title: 'Embedded Finance Goes Mainstream',
+    icon: '💳',
+    urgency: 'Now',
+    detail: 'B2B embedded finance projected to reach $15.6T by 2030 (from $4.1T today). Germany has a $44.3B embedded finance opportunity through 2030. Stripe, Shopify Capital, and Klarna have proven the merchant activation playbook.',
+    implication: 'Topi\'s architecture is right. The race is deepening reseller integration before incumbents (PEAC itself) or B2B fintech platforms build comparable digital channels.',
+  },
+  {
+    title: 'Circular Economy as Compliance',
+    icon: '♻️',
+    urgency: '12–18 months',
+    detail: 'CSRD Omnibus (Feb 2026) simplified scope but Scope 3 Category 2 (purchased goods) remains for large enterprises. 60% of IT decision-makers now prioritize sustainability in procurement. €5.1B refurbished IT market in 2025.',
+    implication: 'Topi already has the data (device lifecycle, return dates, refurbishment outcomes). A carbon dashboard is a product with no new data collection — pure packaging.',
+  },
+  {
+    title: 'MDM Integration is Table Stakes',
+    icon: '🔒',
+    urgency: '6–12 months',
+    detail: 'Zero-trust hardware provisioning is now a procurement criterion. Windows Autopilot reduces device provisioning from 4–6 hours to <1 hour. MDM integration is becoming expected as part of DaaS.',
+    implication: 'A reseller who can offer "device + MDM enrollment + financing" from a single Topi quote is dramatically more competitive. Partnership with Intune/Jamf is the path.',
+  },
+  {
+    title: 'Germany Mittelstand Digitization',
+    icon: '🏭',
+    urgency: 'Ongoing',
+    detail: 'SMB IT spending in Europe: €96B+ market. 63% of SMBs use hybrid cloud. €130B Germany Fund launched 2025. Key barrier: SMBs rely on IT resellers as primary trust intermediary — not self-educating into DaaS.',
+    implication: 'Topi\'s B2B2B model is correctly oriented. The SMB does not want to think about financing — they want their trusted IT reseller to make it simple.',
+  },
+];
+
+export const PEAC_CONTEXT = {
+  fullName: 'Pan-European Americas Capital Solutions',
+  aum: '€4.5B+ in lease assets',
+  originations: '$2.4B+ annual',
+  countries: 12,
+  countryList: 'UK, Germany, France, Poland, Hungary, Italy, Czech Republic, Austria, Sweden, Spain + USA',
+  owner: 'HPS Investment Partners LLC (BlackRock portfolio, ~$95B AUM)',
+  whyTheyBoughtTopi: [
+    'Digital transformation of their equipment leasing business',
+    'API-first platform for subscription-based hardware financing (they lacked this)',
+    'Expansion into European IT channel via Topi\'s OEM and reseller relationships',
+    'Speed to market: UK deployed 4 months post-acquisition',
+  ],
+  whatChangedForTopi: [
+    'Balance sheet: No more milestone-gated Macquarie SPV. PEAC funds at institutional scale.',
+    'Geographic: PEAC\'s 12-country network is Topi\'s next expansion runway',
+    'Enterprise credibility: A 4-year-old fintech startup becomes a $6B institution\'s subsidiary',
+    'Risk appetite: PEAC can absorb larger deals that previously exceeded Topi\'s limits',
+  ],
+};
+
+export const GLOSSARY = [
+  { term: 'HaaS', full: 'Hardware-as-a-Service', def: 'Business model where hardware is rented/subscribed monthly rather than purchased outright. Topi is HaaS infrastructure for IT resellers.' },
+  { term: 'DaaS', full: 'Device-as-a-Service', def: 'Subset of HaaS specifically for end-user computing devices (laptops, phones, tablets). Often includes managed services (MDM, support) on top of the hardware subscription.' },
+  { term: 'GMV', full: 'Gross Merchandise Value', def: 'Total transaction value flowing through the platform — the value of all hardware contracts originated. Topi earns a spread on this, not the full GMV.' },
+  { term: 'Seller Penetration', full: '', def: 'The % of a seller\'s B2B GMV that is transacted through Topi vs. other payment options. Topi\'s current rate: 1.5% vs. 3% industry average. Doubling this requires no new customers.' },
+  { term: 'SPV', full: 'Special Purpose Vehicle', def: 'The off-balance-sheet legal entity co-owned by Topi and Macquarie Bank that held the physical hardware assets. Dissolved upon PEAC acquisition. Topi is now funded directly via PEAC\'s balance sheet.' },
+  { term: 'IFRS 16', full: 'International Financial Reporting Standard 16', def: 'Accounting standard that requires companies to capitalize operating leases above de minimis thresholds. For SMBs below these thresholds, Topi contracts remain true OpEx — a key CFO selling point.' },
+  { term: 'ICE Score', full: 'Impact × Confidence × Ease', def: 'PM prioritization framework. Each dimension scored 1–10, multiplied together. Highest scores = highest priority. Top initiative: Seller SPIFF program (ICE 576).' },
+  { term: 'JTBD', full: 'Jobs-to-be-Done', def: 'Product thinking framework. Customers "hire" a product to do a specific job. Topi is being hired for "defer payment" (50% buyout cohort) not "perpetual access to latest tech" (25% upgrade cohort). This gap defines the retention problem.' },
+  { term: 'SPIFF', full: 'Sales Performance Incentive Fund', def: 'Per-deal cash bonus paid to sales reps for selling a specific product or payment method. Klarna used SPIFFs to drive merchant adoption from near-zero to 500K merchants. Topi\'s #1 recommended Q1 initiative (ICE 576).' },
+  { term: 'B2B2B', full: 'Business-to-Business-to-Business', def: "Topi's model: Topi (technology layer) → IT Reseller (seller/merchant) → End Business Customer. Topi never sells to end customers directly — the reseller owns that relationship." },
+  { term: 'API-first', full: 'Application Programming Interface first', def: 'Topi\'s checkout is embedded into resellers\' systems via API. Sellers integrate once; Topi handles credit, contracts, billing. No paperwork. Quote to contract in minutes.' },
+  { term: 'Operating Lease', full: '', def: 'A lease where the lessee does not acquire ownership (vs. finance lease). Topi contracts qualify as operating leases for SMBs — payments are 100% tax-deductible OpEx. This is a primary sales argument.' },
+  { term: 'SEPA Direct Debit', full: 'Single Euro Payments Area', def: 'Topi\'s only payment method for business customers. SEPA allows recurring euro payments across Europe. Topi currently offers no credit card or invoice payment options — a minor friction point for some customers.' },
+  { term: 'KYB/KYC', full: 'Know Your Business / Know Your Customer', def: 'Regulatory identity verification process for business customers. Topi performs KYB automatically as part of the credit check — typically completed in minutes via open banking data.' },
+  { term: 'Open Banking', full: '', def: 'Access to bank transaction data via API with customer consent. Topi uses open banking data (plus payment processor history, e-commerce sales) to assess B2B credit risk in real time without traditional financial statements.' },
+  { term: 'Residual Value', full: 'RV', def: 'The estimated market value of a device at the end of its rental term. Topi prices residual value into monthly rates — if customers return, the built-in RV reduces their effective cost. If they buy outright, the RV is agreed at contract end.' },
+  { term: 'CSRD', full: 'Corporate Sustainability Reporting Directive', def: 'EU regulation requiring companies to report on ESG factors. Scope 3 Category 2 (purchased goods — i.e., hardware) remains in scope for large enterprises even after the Feb 2026 Omnibus simplification. Creates demand for Topi\'s carbon dashboard opportunity.' },
+  { term: 'Churn Rate', full: '', def: 'Percentage of customers who do not renew at contract end. Topi\'s end-of-contract churn: 25% (return without re-renting). SaaS benchmark: 80–90% renewal rate for well-managed customers.' },
+  { term: 'NPS', full: 'Net Promoter Score', def: 'Customer satisfaction metric (-100 to +100). Topi has NOT published NPS data. The absence of public NPS data is a research gap — it suggests either the metric is not tracked publicly or not yet strong enough to share.' },
+  { term: 'ARR', full: 'Annual Recurring Revenue', def: 'For DaaS platforms, ARR is the total value of active rental contracts annualized. Topi has not disclosed ARR. Everphone (€96M ARR) and Lendis (~$20M ARR) are disclosed comparators.' },
+  { term: 'MDM', full: 'Mobile Device Management', def: 'Software that manages corporate device fleets (enrollment, security policies, remote wipe, app deployment). Examples: Microsoft Intune, Jamf, Mosyle. Integration with MDM is becoming table stakes for DaaS — currently a gap for Topi.' },
+  { term: 'PEAC', full: 'Pan-European Americas Capital Solutions', def: 'Topi\'s parent company since Aug 2025. Equipment finance company backed by HPS Investment Partners (BlackRock). €4.5B+ in lease assets, 12 countries. Provides Topi with institutional balance sheet and geographic runway.' },
+  { term: 'Macquarie SPV', full: 'Special Purpose Vehicle with Macquarie Bank', def: 'The €50M off-balance-sheet vehicle (Jul 2024) that funded Topi\'s device portfolio pre-PEAC. Asset-backed, milestone-gated. Dissolved upon PEAC acquisition — no longer relevant operationally but reveals Topi\'s capital-light model design.' },
+];
+
+export const STAKEHOLDERS = [
+  {
+    role: 'Product Lead / VP of Product',
+    background: 'Likely a senior PM or Director-level. Evaluating you for strategic thinking, customer empathy, and cross-functional leadership.',
+    whatTheyWant: [
+      'Evidence you can translate business strategy into a crisp product narrative',
+      'Proof you understand B2B2B dynamics — the seller is the primary user, not the end customer',
+      'PM craft: JTBD, ICE scoring, discovery rigor, instrumentation thinking',
+      'Commercial mindset: linking product decisions to GMV, attach rate, renewal rate',
+    ],
+    questionsToAsk: [
+      'What does the reseller portal currently look like — is there a self-serve dashboard for sellers to see their Topi performance?',
+      'How are you currently measuring seller activation vs. just seller integration?',
+      'What\'s the product team structure — are PMs embedded with engineering squads or cross-functional?',
+      'How does product prioritization happen post-PEAC — is there a combined roadmap with PEAC or are you operating independently?',
+    ],
+    questionsTheyMightAsk: [
+      'Walk me through how you chose which of the three challenges to tackle.',
+      'What assumptions did you make, and how would you validate them?',
+      'How would you break this down for an engineering team?',
+      'What north-star metric would you instrument for this initiative?',
+    ],
+  },
+  {
+    role: 'VP of Partnerships',
+    background: 'Leonard Coen (hired Jan 2024, ex-Solarisbank SVP). Focused on channel development — growing the reseller network and deepening existing partner relationships.',
+    whatTheyWant: [
+      'Understanding that sellers are the primary growth lever, not direct marketing to end customers',
+      'Ideas on how to increase seller activation (the 1.5% penetration problem)',
+      'Appreciation for the complexity of channel relationships — resellers have their own margin incentives',
+      'Commercial product thinking: how does Topi\'s product support the partnership\'s GTM?',
+    ],
+    questionsToAsk: [
+      'What does a "successful" reseller partner look like in terms of Topi attach rate today?',
+      'Are there any sellers currently at or above the 3% industry benchmark — what are they doing differently?',
+      'How does Lenovo\'s LGFS partnership affect reseller incentives in practice? Do resellers actively use it in sales conversations?',
+      'What\'s the biggest blocker you hear from sellers when you try to increase their Topi usage?',
+    ],
+    questionsTheyMightAsk: [
+      'How would you support the partnerships team with product to increase seller penetration?',
+      'What product features would help our reseller partners close more deals with Topi?',
+      'How do you think about the tradeoff between platform openness and reseller exclusivity?',
+    ],
+  },
+  {
+    role: 'Head of Engineering / Engineering Manager',
+    background: 'Engineering-heavy team (~20 of 35 employees in engineering, Leasing Life Mar 2025). CTO Ernesto Jiménez (ex-GoCardless) departed ~2023. API-first culture, TypeScript/React stack.',
+    whatTheyWant: [
+      'A PM who writes crisp, implementation-ready specs — not vague feature requests',
+      'Technical literacy: understanding of APIs, data models, integration patterns',
+      'Realistic scoping — prioritizing high-impact features while respecting engineering capacity',
+      'Partnership not dictation — they want a PM who explains "why" before "what"',
+    ],
+    questionsToAsk: [
+      'What does the current tech stack look like for the reseller integration — REST API, webhooks, or embedded iframe?',
+      'How is the credit decision engine structured — rules-based or ML-driven?',
+      'What does the release cadence look like — are you shipping weekly, biweekly?',
+      'Are there any significant technical debt areas that consistently impact product velocity?',
+    ],
+    questionsTheyMightAsk: [
+      'How do you write a PRD? Can you walk me through your process?',
+      'How do you handle technical trade-offs when engineering says "that\'ll take 3 months"?',
+      'Tell me about a time you had to push back on engineering scope.',
+      'How do you think about platform reliability vs. new feature delivery?',
+    ],
+  },
+  {
+    role: 'Risk / Credit Team',
+    background: 'In-house risk team (not outsourced). Uses open banking, payment processor data, e-commerce history for real-time B2B credit decisions. Key defensible capability.',
+    whatTheyWant: [
+      'PM who understands that risk is a product feature, not just a back-office function',
+      'Respect for the credit decision process — it protects the business and enables growth',
+      'Interest in how better risk data could enable higher approval rates or larger deal sizes',
+    ],
+    questionsToAsk: [
+      'What\'s the current approval rate for SMB applications? Where do applications fail?',
+      'Is there a difference in default rates between seller channels — e.g., SYNAXON partners vs. direct integrations?',
+      'How does the EU AI Act affect your credit decisioning model — are you considered a high-risk AI system?',
+    ],
+    questionsTheyMightAsk: [
+      'How would you approach adding a new vertical (e.g., medical equipment) without compromising risk quality?',
+      'If you were building the pre-qualification engine, what data signals would you prioritize?',
+    ],
+  },
+];
+
+export const PRODUCT_ARCHITECTURE = [
+  { layer: 'Checkout & Credit Engine', what: 'Real-time B2B credit scoring; fraud detection; approval in minutes via open banking', keyDetail: 'No traditional financial statements required; uses modern data signals' },
+  { layer: 'Omnichannel Sales Support', what: 'API for e-commerce checkout, telesales link generation, in-store POS integration', keyDetail: '"Quote to contract in under 30 seconds" (PEAC UK, Feb 2026)' },
+  { layer: 'topi Portal', what: 'Customer-facing dashboard: invoices, device tracking, payment management, end-of-contract decisions', keyDetail: 'Mid-term upgrade initiation; 4-week pre-expiry notification (current gap: too late)' },
+  { layer: 'Device Lifecycle Ops', what: 'Pre-expiry notification, prepaid return logistics, NIST data erasure, circular remarketing', keyDetail: 'All devices brand new (not refurbished at point of sale); multi-cycle asset management' },
+  { layer: 'topi Care / Care+', what: 'Accidental damage protection, up to 2 claims/12 months, 48-hour replacement device', keyDetail: 'Must be selected at checkout — cannot be added later. Cannot be canceled mid-contract.' },
+  { layer: 'Partner Integrations', what: 'ITscope (€49/month), SYNAXON EGIS, Michael AG ERP, Lenovo LGFS rebate program', keyDetail: 'White-label variants: "Cyberport Abo Business", "Michael DaaS powered by topi"' },
+];
+
+export const PAIN_POINTS = [
+  { who: 'End Customer', pain: 'No withdrawal right after unboxing', severity: 'High', mentions: 1, source: 'Trustpilot', totalReviewed: 89, detail: 'B2B legal standard in Germany but surprises users. Most prominent negative review theme.' },
+  { who: 'End Customer', pain: 'Early termination fees opaque', severity: 'High', mentions: 1, source: 'Trustpilot', totalReviewed: 89, detail: '"Very high cancellation fees" cited in Dec 2024 Trustpilot review. Formula not disclosed publicly.' },
+  { who: 'End Customer', pain: 'topi Care cannot be added post-checkout', severity: 'Medium', mentions: null, source: 'Product observation', totalReviewed: null, detail: 'One-time decision. No second chance even if customer realizes they want coverage.' },
+  { who: 'End Customer', pain: 'SEPA-only payment', severity: 'Medium', mentions: null, source: 'Product analysis', totalReviewed: null, detail: 'No credit card or invoice options. Restricts some businesses with different payment preferences.' },
+  { who: 'End Customer', pain: 'Portal search/catalog UX', severity: 'Low', mentions: 1, source: 'Trustpilot', totalReviewed: 89, detail: 'Reviewer noted limited search functionality — contacted support directly instead.' },
+  { who: 'Seller', pain: 'No performance dashboard', severity: 'High', mentions: null, source: 'Research analysis', totalReviewed: null, detail: 'Sellers cannot see their own Topi attach rate, conversion funnel, or compare vs. peers. Identified in competitor analysis (Grenke/Lendis both have reseller dashboards) and master analysis.' },
+  { who: 'Seller', pain: 'Integration complexity for non-SYNAXON sellers', severity: 'Medium', mentions: null, source: 'Research analysis', totalReviewed: null, detail: 'Smaller system houses outside SYNAXON/ITscope networks face higher onboarding friction.' },
+  { who: 'Seller', pain: 'Narrow hardware categories', severity: 'Low', mentions: null, source: 'Research analysis', totalReviewed: null, detail: 'topi.eu merchant page claims "entire product catalogue supported" but in practice covers IT devices only (laptops, tablets, smartphones, accessories). No medical, fitness, or industrial hardware despite stated expansion aspirations.' },
+];

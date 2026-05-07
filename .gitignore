@@ -1,0 +1,19 @@
+# Ignore everything at root
+*
+
+# Allow this file and CI
+!.gitignore
+!.github/
+!.github/**
+
+# Allow dashboard folder
+!dashboard/
+!dashboard/**
+
+# Ignore build artifacts inside dashboard
+dashboard/node_modules/
+dashboard/node_modules/**
+dashboard/dist/
+dashboard/dist/**
+dashboard/.env
+dashboard/.env.*
