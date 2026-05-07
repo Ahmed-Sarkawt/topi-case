@@ -1,24 +1,16 @@
 import { useState, useEffect } from 'react'
-import { LayoutDashboard, FlaskConical, Swords, BookOpen, FileText, MonitorPlay, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
-import Overview from './components/Overview'
+import { FlaskConical, FileText, MonitorPlay, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import Analysis from './components/Analysis'
-import PMToolkit from './components/PMToolkit'
-import Competitive from './components/Competitive'
 import PRD from './components/PRD'
 import Presentation from './components/Presentation'
-import { COMPETITIVE_PLATFORMS } from './competitiveData'
 import { TooltipProvider } from './components/Tip'
 
 const NAV = [
-  { id: 'overview', label: 'Overview', Icon: LayoutDashboard, sub: 'Case study presentation' },
   { id: 'analysis', label: 'Deep Analysis', Icon: FlaskConical, sub: 'Research exploration' },
-  { id: 'competitive', label: 'Competitive Intel', Icon: Swords, sub: 'SWOT · features · north stars' },
-  { id: 'toolkit', label: 'PM Toolkit', Icon: BookOpen, sub: 'Role prep & terminology' },
   { id: 'prd', label: 'PRD', Icon: FileText, sub: 'Seller penetration · greenfield' },
   { id: 'presentation', label: 'Presentation', Icon: MonitorPlay, sub: 'VP · Product · Engineering' },
 ]
 
-// McKinsey sidebar palette
 const S = {
   bg: '#002654',
   border: '#003F87',
@@ -31,7 +23,7 @@ const S = {
 }
 
 export default function App() {
-  const [page, setPage] = useState('overview')
+  const [page, setPage] = useState('analysis')
   const [sidebarOpen, setSidebarOpen] = useState(true)
 
   useEffect(() => {
@@ -43,7 +35,6 @@ export default function App() {
   return (
     <TooltipProvider>
     <div style={{ display: 'flex', minHeight: '100vh', fontFamily: "'IBM Plex Sans', system-ui, sans-serif" }}>
-      {/* Sidebar */}
       <aside style={{
         width: W,
         minHeight: '100vh',
@@ -131,7 +122,6 @@ export default function App() {
           })}
         </nav>
 
-        {/* Bottom info — hidden when collapsed */}
         {sidebarOpen && (
           <div style={{ padding: '16px 20px', borderTop: `1px solid ${S.border}`, fontSize: 11, color: S.textSubtle, lineHeight: 1.6, letterSpacing: '0.16px' }}>
             <div style={{ color: S.activeAccent, fontWeight: 600, marginBottom: 6, textTransform: 'uppercase', fontSize: 10, letterSpacing: '0.32px' }}>Research Coverage</div>
@@ -144,12 +134,8 @@ export default function App() {
         )}
       </aside>
 
-      {/* Main content */}
       <main style={{ marginLeft: W, flex: 1, minHeight: '100vh', background: '#f4f4f4', transition: 'margin-left 0.2s ease' }}>
-        {page === 'overview' && <Overview />}
         {page === 'analysis' && <Analysis />}
-        {page === 'competitive' && <Competitive platforms={COMPETITIVE_PLATFORMS} />}
-        {page === 'toolkit' && <PMToolkit />}
         {page === 'prd' && <PRD />}
         {page === 'presentation' && <Presentation sidebarWidth={W} />}
       </main>
