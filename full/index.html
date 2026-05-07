@@ -248,6 +248,14 @@
         page-break-after:always !important; break-after:page !important;
         overflow:hidden !important; display:flex !important; flex-shrink:0 !important;
       }
+      /* Override responsive breakpoints that collapse layout at small viewport widths */
+      .s-dark, .s-paper, .s-white { padding:52px 72px 40px !important; }
+      .cols-2    { grid-template-columns:1fr 1fr !important; gap:44px !important; }
+      .cols-3    { grid-template-columns:1fr 1fr 1fr !important; gap:28px !important; }
+      .cols-6040 { grid-template-columns:60fr 40fr !important; gap:48px !important; }
+      .cover-sidebar { display:flex !important; }
+      .stat-cmp  { grid-template-columns:1fr 1px 1fr !important; }
+      .stat-cmp-divider { width:1px !important; height:72px !important; }
     }
   </style>
 </head>
