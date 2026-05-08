@@ -1,14 +1,23 @@
 import { useState, useEffect } from 'react'
-import { FlaskConical, FileText, MonitorPlay, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
+import { FlaskConical, FileText, MonitorPlay, PanelLeftClose, PanelLeftOpen, Trophy, Mail, Activity, Calculator } from 'lucide-react'
 import Analysis from './components/Analysis'
 import PRD from './components/PRD'
 import Presentation from './components/Presentation'
+import SpiffDashboard from './components/features/SpiffDashboard'
+import EmailCampaignKit from './components/features/EmailCampaignKit'
+import PipelineDashboard from './components/features/PipelineDashboard'
+import QuoteGenerator from './components/features/QuoteGenerator'
 import { TooltipProvider } from './components/Tip'
 
 const NAV = [
   { id: 'analysis', label: 'Deep Analysis', Icon: FlaskConical, sub: 'Research exploration' },
   { id: 'prd', label: 'PRD', Icon: FileText, sub: 'Seller penetration · greenfield' },
   { id: 'presentation', label: 'Presentation', Icon: MonitorPlay, sub: 'VP · Product · Engineering' },
+  { id: 'divider' },
+  { id: 'spiff', label: 'SPIFF Dashboard', Icon: Trophy, sub: 'Seller incentive tracker' },
+  { id: 'email', label: 'Email Campaign Kit', Icon: Mail, sub: 'Reseller outreach templates' },
+  { id: 'pipeline', label: 'Pipeline Dashboard', Icon: Activity, sub: 'Deal lifecycle visibility' },
+  { id: 'quote', label: 'Quote Generator', Icon: Calculator, sub: 'Live financing quotes' },
 ]
 
 const S = {
@@ -88,7 +97,14 @@ export default function App() {
 
         {/* Nav */}
         <nav style={{ padding: '8px 0', flex: 1 }}>
-          {NAV.map(n => {
+          {NAV.map((n, i) => {
+            if (n.id === 'divider') {
+              return sidebarOpen ? (
+                <div key={i} style={{ margin: '8px 16px 4px', paddingTop: 8, borderTop: `1px solid ${S.border}` }}>
+                  <div style={{ fontSize: 10, fontWeight: 600, color: S.textSubtle, letterSpacing: '0.32px', textTransform: 'uppercase' }}>Feature Prototypes</div>
+                </div>
+              ) : <div key={i} style={{ margin: '8px 0', borderTop: `1px solid ${S.border}` }} />
+            }
             const active = page === n.id
             return (
               <button
@@ -138,6 +154,10 @@ export default function App() {
         {page === 'analysis' && <Analysis />}
         {page === 'prd' && <PRD />}
         {page === 'presentation' && <Presentation sidebarWidth={W} />}
+        {page === 'spiff' && <SpiffDashboard />}
+        {page === 'email' && <EmailCampaignKit />}
+        {page === 'pipeline' && <PipelineDashboard />}
+        {page === 'quote' && <QuoteGenerator />}
       </main>
     </div>
     </TooltipProvider>
