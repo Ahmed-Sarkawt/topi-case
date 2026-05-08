@@ -10,6 +10,12 @@
 !dashboard/
 !dashboard/**
 
+# Allow standalone files
+!README.md
+!send-presentation.html
+!Ahmed_PL.jpg
+!topi-presentation.pdf
+
 # Ignore build artifacts inside dashboard
 dashboard/node_modules/
 dashboard/node_modules/**
